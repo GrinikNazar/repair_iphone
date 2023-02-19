@@ -1,0 +1,81 @@
+{% extends 'service/base.html' %}
+
+{% block content %}
+
+   <div class="page__main main-content">
+      <div class="main-content__items">
+
+         {{ statistic }}
+
+         {% for repair in repairs %}
+
+            <!-- ОКРЕМИЙ ЕЛЕМЕНТИ item-main-content із зеленим ідентифікатор item-green -->
+<!--            <div class="main-content__item item-main-content item-green">-->
+            <div class="main-content__item item-main-content {% if repair.status == repair.CLOSED %}item-gray{% else %}item-green{% endif %}">
+               <div class="item-main-content__body   body-item ">
+
+                  <div class="body-item__repair-details details-repair">
+                     <div class="details-repair__number">{{ repair.number }}</div>
+                     <div class="details-repair__shop">{{ repair.shop }}</div>
+                  </div>
+
+                  <div class="body-item__titles titles-item">
+                     <div class="titles-item__model">Модель: </div>
+                     <div class="titles-item__malfunction">Несправність:</div>
+                     <div class="titles-item__password">Пароль: </div>
+                  </div>
+
+                  <div class="{% if repair.warranty %}body-item__parameters parameters-item worranty{% else %}body-item__parameters parameters-item{% endif %}">
+                     <div class="parameters-item__model-parameter">{{ repair.model }}</div>
+                     <div class="{% if repair.warranty %}parameters-item__malfunction-parameter warranty{% else %}parameters-item__malfunction-parameter{% endif %}">{{ repair.defect }}</div>
+                     <div class="parameters-item__passAndTimes passAndTimes">
+                        <div class="passAndTimes__password">{{ repair.password }}</div>
+                        <div class="passAndTimes__times">
+                           {% if repair.status != repair.CLOSED %}
+                              <div class="passAndTimes__label"> Час: </div>
+                              <div class="passAndTimes__starttime">{{ repair.time_create|date:"H:i" }}</div>
+                              <div class="passAndTimes__label2"> до</div>
+                              <div class="passAndTimes__endtime">18:00</div>
+                           {% else %}
+                              <div class="passAndTimes__label2">Виконаний:</div>
+                              <div class="passAndTimes__endtime">{{ repair.time_end|date:"d-m" }}-{{ repair.time_end|time:"H:i"}}</div>
+                           {% endif %}
+                        </div>
+                     </div>
+                  </div>
+
+                  {% if repair.master %}
+
+                     <div class="body-item__actions actions-item ">
+                        <div class="actions-item__worker">{{repair.master.name}}</div>
+                        {% if repair.status == repair.CLOSED %}
+                           <div class="actions-item__button button-done">Виконаний</div>
+                        {% else %}
+                           <a href="{% url 'closed_repair' repair.pk %}"><div class="actions-item__button button-close">Закрити</div></a>
+                        {% endif %}
+                     </div>
+
+                  {% else %}
+                     <div class="body-item__actions actions-item ">
+                        <a href="{% url 'rep' repair.pk user.name %}"><div class="actions-item__button button-take">Прийняти</div></a>
+                     </div>
+                  {% endif %}
+
+               </div>
+
+               <div class="item-main-content__statusbar">
+                  {% if repair.status == repair.CLOSED %}
+                     <span style="width:100%; background: grey;"></span>
+                  {% else %}
+                     <span style="width:10%;"></span>
+                  {% endif %}
+               </div>
+
+            </div>
+
+         {% endfor %}
+
+
+      </div>
+   </div>
+{% endblock %}

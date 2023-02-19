@@ -1,0 +1,232 @@
+{% load static %}
+{% load service_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>INSTYLE REPAIR</title>
+   <link href="https://fonts.googleapis.com/css?family=Montserrat:300,regular,500,600,700,800&display=swap" rel="stylesheet" />
+   <link rel="stylesheet" href="{% static 'service/css/style.css' %}">
+</head>
+
+<body>
+
+
+   <div class="wrapper">
+
+
+      <!-- ШАПКА -->
+
+      <header class="header">
+         <div class="header__container">
+
+            <!-- логотип шапки -->
+            <a href="#" class="header__logo">
+               INSTYLE <span>REPAIR</span>
+            </a>
+
+            <!-- пошук -->
+            <div class="header__search search-header">
+               <input type="text" class="search-header__input">
+            </div>
+
+            <!-- решта шапки -->
+            <div class="header__menu menu">
+               <nav class="menu__body">
+                  <div class="menu__list-login">{{ user.name }}</div>
+
+                  <ul class="menu__list">
+                     {% if user.name %}
+                        <li><a href="{% url 'index' %}" class="menu__link">Всі ремонти</a></li>
+                        <li><a href="{% url 'my_repairs' user.pk %}" class="menu__link">Мої ремонти</a></li>
+                        <li><a href="{% url 'my_statistic' user.pk %}" class="menu__link">Статистика</a></li>
+                     {% else %}
+                        <li><a href="{% url 'index' %}" class="menu__link">Всі ремонти</a></li>
+                        <li><a href="" class="menu__link">Мої ремонти</a></li>
+                        <li><a href="" class="menu__link">Статистика</a></li>
+                     {% endif %}
+                  </ul>
+
+                  <!-- <img src="./img/header/Rectangle.svg" alt=""> -->
+                  <a href="" class="menu__list-exit">Вихід</a>
+               </nav>
+               <!-- хрестик в бургер меню при малих екранах -->
+               <div class="menu__icon icon-menu">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+               </div>
+            </div>
+         </div>
+      </header>
+
+      <!-- ОСНОВНА ЧАСТИНА -->
+      <main class="page">
+
+
+         <!-- ВИРИНАЮЧЕ ВІКНО ІЗ ОБЄКТА -->
+         <div class="popUp display">
+            <!-- основне виринаюче вікно -->
+            <div class="popUp__window">
+            <!-- всяка хрень -->
+            <div class="popUp__header header-popUp">
+                <div class="header-popUp__worrantyDate">
+                    <div class="header-popUp__worranty">Гарантійний</div>
+                    <div class="header-popUp__date">21.03.2021</div>
+                </div>
+                <div class="header-popUp__number">№93799</div>
+                <div class="header-popUp__shop">InStyle </div>
+            </div>
+            <div class="popUp__body body-popUp">
+                <div class="body-popUp__properties properties"> 
+                    <div class="properties__status">Статус</div>
+                    <div class="properties__timeOfReceiving">Час прийняття</div>
+                    <div class="properties__timeOfFinishing">Завершення</div>
+                    <div class="properties__model">Модель</div>
+                    <div class="properties__password">Пароль</div>
+                    <div class="properties__IMEI">IMEI</div>
+                    <div class="properties__manager manager-properties">
+                        <div class="manager-properties__title">Менеджер</div>
+                        <div class="manager-properties__name">Дмитро</div>
+                    </div>
+                    <div class="properties__client client-properties">
+                        <div class="client-properties__title">Клієнт</div>
+                        <div class="client-properties__name">Якийсь Вася</div>
+                    </div>
+                </div>
+                <div class="body-popUp__values values ">
+                    <div class="values__status">Статус</div>
+                    <div class="values__timeOfReceiving timeOfReceiving">
+                        <div class="timeOfReceiving__time">17:15</div>
+                        <div class="timeOfReceiving__date">25.08.2023</div>
+                    </div>
+                    <div class="values__timeOfFinishing timeOfFinishing">
+                        <div class="timeOfFinishing__time">20:00</div>
+                        <div class="timeOfFinishing__date">26.08.2023</div>
+                    </div>
+                    <div class="values__model">iPhone 11ProMax Gold</div>
+                    <div class="values__password">888888</div>
+                    <div class="values__IMEI">358426879461235</div>
+                    <div class="values__master master-value">
+                        <div class="master-value__title">Майстер</div>
+                        <div class="master-value__name">Саша</div>
+                    </div>
+                    <div class="values__telnumber telnumber-value">
+                        <div class="telnumber-value__title">№ телефону</div>
+                        <div class="telnumber-value__number">93799922</div>
+                    </div>
+                </div>
+            </div>
+            <div class="popUp__malfunction malfunction-popUp">
+                <div class="malfunction-popUp__title">Несправність</div>
+                <div class="malfunction-popUp__text">Кусок сраного гімна ніхуя не включається і їбе мені мозок. Ще блять ніц не тримав батарейку, лиш встигав секунди парнуху глипну і пездонс. Зробіт  бо віддав  грошуй а воно не їбашит ніхуя! Повідомив клієнт!</div>
+            </div>
+            <div class="popUp__notes notes-popUp">
+                <div class="notes-popUp__title">Відписати за ремонт</div>
+                <div class="notes-popUp__text">Ви вхуйкали свій тріпак до такої степені шо тепе це ріщє зможе лиш стіл підпирати. Можете забрати його собі і запхати собі в окуляр, кончений вилупок. Треба  з телефоном поводитись а нє як оце от...</div>
+            </div>
+            <!-- нижні кнопки виринаючого меню -->
+            <div class="popUp__actions action-popUp">
+                <a href="#" class="action-popUp__close">Закрити</a>
+                <a href="#" class="action-popUp__history">Історія</a>
+                <a href="#" class="action-popUp__answer">Відповісти</a>
+            </div>
+    
+            </div>
+    
+         </div>
+
+
+         <div class="page__container">
+
+            <!-- САЙД БАР -->
+            <div class="page__sidebar sidebar">
+               <div class="sidebar__container">
+                  <div class="sidebar__all">
+
+
+                     <!-- сайд бар РЕмонти -->
+                     <div class="sidebar__repairs repairs-sidebar">
+                        <h3 class="repairs-sidebar__title title"> Ремонти</h3>
+
+                        <div class="repairs-sidebar__item ">
+                           <a href="" class="repairs-sidebar__link done">Всі</a>
+                        </div>
+
+                        <div class="repairs-sidebar__item ">
+                           <a href="" class="repairs-sidebar__link">Виконані</a>
+                        </div>
+
+                        <div class="repairs-sidebar__item">
+                           <a href="" class="repairs-sidebar__link">Гарантійні</a>
+                        </div>
+
+                        <div class="repairs-sidebar__item">
+                           <a href="" class="repairs-sidebar__link">Не прийняті</a>
+                        </div>
+
+                     </div>
+
+
+                     <!-- сайд бар магазини -->
+                     {% get_shops as shops %}
+                     <div class="sidebar__shops shops-sidebar">
+                        <h3 class="shops-sidebar__title title">Магазини</h3>
+
+                        <div class="shops-sidebar__buttons">
+                           {% for shop in shops %}
+                              <button class="sshops-sidebar__button button-sidebar">{{ shop }}</button>
+                           {% endfor %}
+                           <!-- <button type="button" class="sshops-sidebar__button button-sidebar ">NewInStyle</button>
+                           <button type="button" class="shops-sidebar__button button-sidebar _active-button">InStyle</button> -->
+                        </div>
+                     </div>
+
+                     <!-- сайд бар МАЙСТРИ -->
+                     {% get_masters as masters %}
+                     <div class="sidebar__workers workers-sidebar">
+                        <h3 class="workers-sidebar__title title">Майстри</h3>
+                        <div class="workers-sidebar__buttons">
+                           {% for master in masters %}
+                              <button type="button" class="shops-sidebar__button button-sidebar ">{{ master.name }}</button>
+                           {% endfor %}
+                        </div>
+                     </div>
+
+
+                  </div>
+               </div>
+
+            </div>
+
+            {% block content %}
+
+
+            {% endblock %}
+
+
+         </div>
+
+         
+      </main>
+
+
+
+      <!-- <footer class="footer">
+         <div class="footer__container">
+            I am FOOTER!
+         </div>
+      </footer> -->
+   </div>
+
+
+   <script src="{% static 'service/js/script.js' %}"></script>
+
+   
+</body>
+
+</html>
