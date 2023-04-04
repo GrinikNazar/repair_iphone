@@ -18,19 +18,20 @@ function buttonClick(e) {
 }
 
 //making active types of works
-const allTypesWork = document.querySelectorAll('.repairs-sidebar__link');
-document.addEventListener('click', linkClick);
-function linkClick(e) {
-   const targetItem3 = e.target;
-   if (targetItem3.closest('.repairs-sidebar__link')) {
-      for (let i = 0; i < allTypesWork.length; i++) {
-         allTypesWork[i].classList.remove('done');
-      }
-      e.preventDefault();
-      targetItem3.classList.toggle('done');
+//const allTypesWork = document.querySelectorAll('.repairs-sidebar__link');
+//document.addEventListener('click', linkClick);
+//function linkClick(e) {
+//   const targetItem3 = e.target;
+//   if (targetItem3.closest('.repairs-sidebar__link')) {
+//      for (let i = 0; i < allTypesWork.length; i++) {
+//         allTypesWork[i].classList.remove('done');
+//      }
+//      e.preventDefault();
+//      targetItem3.classList.toggle('done');
+//
+//   }
+//}
 
-   }
-}
 // ----------------------------------------------------------
 //adding class "display" for displaying popUpWindow
 const allDetailsRepair = document.querySelectorAll('.details-repair');

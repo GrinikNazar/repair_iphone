@@ -38,14 +38,13 @@
             <div class="header__menu menu">
                <nav class="menu__body">
                   <div class="menu__list-login">{{ user.name }}</div>
-
                   <ul class="menu__list">
                      {% if user.name %}
-                        <li><a href="{% url 'index' %}" class="menu__link">Всі ремонти</a></li>
-                        <li><a href="{% url 'my_repairs' user.pk %}" class="menu__link">Мої ремонти</a></li>
+                        <li><a href="{% url 'index'%}" class="menu__link">Всі ремонти</a></li>
+                        <li><a href="{% url 'index' user.pk %}" class="menu__link">Мої ремонти</a></li>
                         <li><a href="{% url 'my_statistic' user.pk %}" class="menu__link">Статистика</a></li>
                      {% else %}
-                        <li><a href="{% url 'index' %}" class="menu__link">Всі ремонти</a></li>
+                        <li><a href="{% url 'index'%}" class="menu__link">Всі ремонти</a></li>
                         <li><a href="" class="menu__link">Мої ремонти</a></li>
                         <li><a href="" class="menu__link">Статистика</a></li>
                      {% endif %}
@@ -146,31 +145,36 @@
             <!-- САЙД БАР -->
             <div class="page__sidebar sidebar">
                <div class="sidebar__container">
-                  <div class="sidebar__all">
 
+                  <div class="sidebar__all">
 
                      <!-- сайд бар РЕмонти -->
                      <div class="sidebar__repairs repairs-sidebar">
-                        <h3 class="repairs-sidebar__title title"> Ремонти</h3>
 
-                        <div class="repairs-sidebar__item ">
+                         <h3 class="repairs-sidebar__title title"> Ремонти</h3>
+
+
+                         <div class="repairs-sidebar__item ">
                            <a href="" class="repairs-sidebar__link done">Всі</a>
-                        </div>
+                         </div>
 
-                        <div class="repairs-sidebar__item ">
+                         <div class="repairs-sidebar__item ">
                            <a href="" class="repairs-sidebar__link">Виконані</a>
-                        </div>
+                         </div>
 
-                        <div class="repairs-sidebar__item">
+                         <div class="repairs-sidebar__item">
                            <a href="" class="repairs-sidebar__link">Гарантійні</a>
-                        </div>
+                         </div>
 
-                        <div class="repairs-sidebar__item">
+                         <div class="repairs-sidebar__item">
                            <a href="" class="repairs-sidebar__link">Не прийняті</a>
-                        </div>
+                         </div>
 
                      </div>
 
+                      <div id="app">
+
+                      </div>
 
                      <!-- сайд бар магазини -->
                      {% get_shops as shops %}
@@ -226,7 +230,6 @@
 
    <script src="{% static 'service/js/script.js' %}"></script>
 
-   
 </body>
 
 </html>

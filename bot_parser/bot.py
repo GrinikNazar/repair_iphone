@@ -29,8 +29,6 @@ def post_request(message):
                 bot.send_message(message.chat.id, 'Good request')
             else:
                 bot.send_message(message.chat.id, '!Bad request!')
-                print(data)
-                print(response.status_code)
 
         except Exception:
             pass

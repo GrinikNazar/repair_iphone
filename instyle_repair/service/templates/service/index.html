@@ -2,16 +2,22 @@
 
 {% block content %}
 
-   <div class="page__main main-content">
+   <div class="page__main main-content" id="repairs">
+
+      {% verbatim %}
+      <div class="main-content__items" v-for="repair in repairs"></div>
+
+      {% endverbatim %}
+
+
       <div class="main-content__items">
 
          {{ statistic }}
 
          {% for repair in repairs %}
 
-            <!-- ОКРЕМИЙ ЕЛЕМЕНТИ item-main-content із зеленим ідентифікатор item-green -->
-<!--            <div class="main-content__item item-main-content item-green">-->
             <div class="main-content__item item-main-content {% if repair.status == repair.CLOSED %}item-gray{% else %}item-green{% endif %}">
+
                <div class="item-main-content__body   body-item ">
 
                   <div class="body-item__repair-details details-repair">
@@ -25,9 +31,16 @@
                      <div class="titles-item__password">Пароль: </div>
                   </div>
 
-                  <div class="{% if repair.warranty %}body-item__parameters parameters-item worranty{% else %}body-item__parameters parameters-item{% endif %}">
-                     <div class="parameters-item__model-parameter">{{ repair.model }}</div>
-                     <div class="{% if repair.warranty %}parameters-item__malfunction-parameter warranty{% else %}parameters-item__malfunction-parameter{% endif %}">{{ repair.defect }}</div>
+                  <div class="body-item__parameters parameters-item{% if repair.warranty %} worranty{% endif %}">
+
+                     <div class="parameters-item__model-parameter">
+                        {{ repair.model }}
+                     </div>
+
+                     <div class="parameters-item__malfunction-parameter{% if repair.warranty %} warranty{% endif %}">
+                        {{ repair.defect }}
+                     </div>
+
                      <div class="parameters-item__passAndTimes passAndTimes">
                         <div class="passAndTimes__password">{{ repair.password }}</div>
                         <div class="passAndTimes__times">
@@ -74,7 +87,6 @@
             </div>
 
          {% endfor %}
-
 
       </div>
    </div>

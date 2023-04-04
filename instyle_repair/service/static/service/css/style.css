@@ -90,7 +90,6 @@ body {
 
 /* -------------------------------------- */
 [class*=__container] {
-  max-width: 1440px;
   margin: 0 auto;
   box-sizing: border-box;
 }
@@ -118,7 +117,7 @@ body {
   align-items: center;
   color: rgba(0, 0, 0, 0.5);
   font-weight: 600;
-  font-size: 14px;
+  font-size: 13px;
   transition: all 0.3s ease 0s;
 }
 .button-sidebar:hover {
@@ -130,7 +129,7 @@ body {
   border: 1px solid #000000;
   color: #000000;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .done {
@@ -498,7 +497,20 @@ body {
 }
 @media (max-width: 550px) {
   .search-header {
-    display: none;
+    position: fixed;
+    top: -100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 55px auto auto auto;
+    padding: 0 0;
+    width: 150px;
+    height: 50px;
+  }
+}
+@media (max-width: 1100px) {
+  .search-header {
+    max-width: 300px;
   }
 }
 .search-header__input {
@@ -508,6 +520,11 @@ body {
   height: 27px;
   position: relative;
   padding-left: 25px;
+}
+@media (max-width: 550px) {
+  .search-header__input {
+    width: 70%;
+  }
 }
 .search-header__input input[type=text] {
   background: rgba(0, 0, 0, 0);
@@ -520,7 +537,7 @@ body {
   padding: 20px;
   width: 10px;
   height: 10px;
-  background: url("/img/header/search.svg") center repeat-y;
+  background: url("../img/header/search.svg") center repeat-y;
   border-top: 3px solid rgb(0, 0, 0);
   border-right: 3px solid rgb(0, 0, 0);
   transform: rotate(45deg);
@@ -660,9 +677,25 @@ body {
     margin-top: 30px;
   }
 }
+.menu__searchIcon {
+  background: url("../img/search-svgrepo-com.svg") 20px 4px no-repeat;
+  background-size: 35px;
+  height: 100%;
+  width: 80px;
+  cursor: pointer;
+}
+@media (min-width: 550px) {
+  .menu__searchIcon {
+    display: none;
+  }
+}
 .menu-open .menu__body,
 .menu-open .menu__body::before {
   left: 0;
+}
+
+.search-open .search-header {
+  top: 0;
 }
 
 .icon-menu {
@@ -734,6 +767,11 @@ body {
   display: flex;
 }
 
+.sideBar-open .sidebar__all {
+  left: 0;
+  z-index: 7;
+}
+
 .sidebar {
   padding-top: 50px;
 }
@@ -746,6 +784,11 @@ body {
   background: #D8D8D8;
   box-sizing: border-box;
   overflow: auto;
+}
+@media (max-width: 860px) {
+  .sidebar__all {
+    left: -200%;
+  }
 }
 .sidebar__repairs {
   background: rgba(255, 255, 255, 0.7);
@@ -834,10 +877,15 @@ body {
   min-height: 100vh;
   overflow: auto;
 }
+@media (max-width: 860px) {
+  .main-content {
+    padding-left: 20px;
+  }
+}
 .main-content__items {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 .item-main-content {
   border: 1px solid rgba(139, 136, 136, 0.7);
@@ -905,8 +953,23 @@ body {
 .body-item__parameters.worranty {
   background: url("../img/main/warranty.svg");
   background-repeat: norepeat;
-  background-position: 260px center;
+  background-position: 250px center;
   background-size: 100% 100%;
+}
+@media (max-width: 1300px) {
+  .body-item__parameters.worranty {
+    background-position: 150px center;
+  }
+}
+@media (max-width: 1000px) {
+  .body-item__parameters.worranty {
+    background-position: 100px center;
+  }
+}
+@media (max-width: 900px) {
+  .body-item__parameters.worranty {
+    background-position: 50px center;
+  }
 }
 .body-item__actions {
   margin: 0 auto;
@@ -933,13 +996,38 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 700px;
+  width: 1000px;
 }
-
-.parameters-item__malfunction-parameter.warranty {
-  width: 500px;
+@media (max-width: 1900px) {
+  .parameters-item__malfunction-parameter {
+    width: 880px;
+  }
 }
-
+@media (max-width: 1700px) {
+  .parameters-item__malfunction-parameter {
+    width: 750px;
+  }
+}
+@media (max-width: 1500px) {
+  .parameters-item__malfunction-parameter {
+    width: 630px;
+  }
+}
+@media (max-width: 1300px) {
+  .parameters-item__malfunction-parameter {
+    width: 500px;
+  }
+}
+@media (max-width: 1100px) {
+  .parameters-item__malfunction-parameter {
+    width: 400px;
+  }
+}
+@media (max-width: 1000px) {
+  .parameters-item__malfunction-parameter {
+    width: 300px;
+  }
+}
 .parameters-item__passAndTimes {
   display: flex;
   width: 50%;

@@ -1,0 +1,35 @@
+.progress-bar-yellow {
+    background-color: #FFE713;
+    border-right: solid 1px #CCBA1A;
+    border-radius: 15px;
+    height: 8px;
+  }
+
+.progress-bar-green {
+  background-color: #4DDB86;
+  border-right: solid 1px #279754;
+  border-radius: 15px;
+  height: 8px;
+}
+
+.progress-bar-green.orange {
+  background-color: #F99E16;
+  border-right: solid 1px #d1830d;
+}
+
+.progress-bar-yellow.orange {
+  background-color: #F99E16;
+  border-right: solid 1px #d1830d;
+}
+
+.progress-bar-green.red {
+  background-color: #F50202;
+  border-right: solid 1px #F50202;
+}
+
+.progress-bar-yellow.red {
+  background-color: #F50202;
+  border-right: solid 1px #F50202;
+}
+
+
