@@ -1,7 +1,4 @@
-import React, { useState } from "react";
-
-const Header = function ({username, exitFunc}) {
-
+const Header = function ({username, exitFunc, searchValue, setSearchValue}) {
 
     return (
         <header className="header">
@@ -12,7 +9,13 @@ const Header = function ({username, exitFunc}) {
                 </a>
 
                 <div className="header__search search-header">
-                    <input type="text" className="search-header__input"/>
+                    <input 
+                        type="text"
+                        className="search-header__input"
+                        value={searchValue}
+                        onChange={event => setSearchValue(event.target.value)}
+                    />
+                    <button type="submit" className="search-icon search-icon-image"></button>
                 </div>
 
                 <div className="header__menu menu">

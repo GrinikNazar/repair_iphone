@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Content from "./components/Content";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
@@ -9,8 +9,21 @@ import jwt_decode from 'jwt-decode';
 
 function App() {
 
+  // Шапка
   const [userLast, setUserLast] = useState({'name': '', 'userId': null})
+  async function getName () {
+    const token = localStorage.getItem('token')
+    const decodeToken = jwt_decode(token)
+    const response = await axios.post('http://127.0.0.1:8000/service/api/v2/get_current_user/', {
+      user: decodeToken.user_id
+    })
+    setUserLast({'name': response.data.name, 'userId': decodeToken.user_id})
+  }
 
+  const [searchValue, setSearchValue] = useState('')
+
+
+  // Логін
   async function handleLogin (username, password) {
     const response = await axios.post('http://127.0.0.1:8000/api/token/', {
       username: username,
@@ -26,15 +39,6 @@ function App() {
 
   const handleLogout = () => {
     localStorage.removeItem('token'); 
-  }
-
-  async function getName () {
-    const token = localStorage.getItem('token')
-    const decodeToken = jwt_decode(token)
-    const response = await axios.post('http://127.0.0.1:8000/service/api/v2/get_current_user/', {
-      user: decodeToken.user_id
-    })
-    setUserLast({'name': response.data.name, 'userId': decodeToken.user_id})
   }
 
   const isToken = () => {
@@ -65,11 +69,8 @@ function App() {
       setRepairs(response.data)
   }
 
-
   useEffect( () => {
-
     getRepairs()
-    
   }, [sidebarResult, activeMasters, activeShops])
 
 
@@ -83,13 +84,23 @@ function App() {
 
   }, [activeMasters, activeShops, sidebarResult])
 
+  const searchedRepair = useMemo( () => {
+    // поки що зроблено пошук по номеру ремонту
+    return repairs.filter(repair => repair.number.includes(searchValue)) // можливо треба зробити якийсь інший алгоритм пошуку
+  }, [searchValue, repairs])
+
  
   return (
     <div>
       {isToken() ? (
         <div className="wrapper">
 
-          <Header username={userLast.name} exitFunc={handleLogout}/>
+          <Header 
+            username={userLast.name} 
+            exitFunc={handleLogout} 
+            searchValue={searchValue} 
+            setSearchValue={setSearchValue}
+          />
 
           <main className="page">
             <div className="page__container">
@@ -104,7 +115,7 @@ function App() {
               
               <Content 
                 currentUser={userLast} 
-                repairs={repairs} 
+                repairs={searchedRepair} 
                 setRepairs={setRepairs}
               />
 
