@@ -8,6 +8,7 @@ class RepairSerializer(serializers.ModelSerializer):
     shop = serializers.SerializerMethodField()
     master = serializers.SerializerMethodField()
     time_create = serializers.SerializerMethodField()
+    imei = serializers.SerializerMethodField()
 
     class Meta:
         model = Repair
@@ -15,6 +16,7 @@ class RepairSerializer(serializers.ModelSerializer):
             'id',
             'status',
             'number',
+            'imei',
             'warranty',
             'model',
             'password',
@@ -43,6 +45,9 @@ class RepairSerializer(serializers.ModelSerializer):
             'time_create': obj.time_create,
             'time_work': obj.time_create + timedelta(hours=obj.time_work)
         }
+
+    def get_imei(self, obj):
+        return obj.imei.lower()
 
 
 class RepairSerializerForBot(serializers.ModelSerializer):

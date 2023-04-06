@@ -85,8 +85,8 @@ function App() {
   }, [activeMasters, activeShops, sidebarResult])
 
   const searchedRepair = useMemo( () => {
-    // поки що зроблено пошук по номеру ремонту
-    return repairs.filter(repair => repair.number.includes(searchValue)) // можливо треба зробити якийсь інший алгоритм пошуку
+    const imeiRepairs = repairs.filter(repair => repair.imei.includes(searchValue.toLowerCase()) || repair.number.includes(searchValue))
+    return imeiRepairs
   }, [searchValue, repairs])
 
  
@@ -111,12 +111,14 @@ function App() {
                 setActiveMasters={setActiveMasters}
                 setActiveShops={setActiveShops}
                 setSidebarResult={setSidebarResult}
+                repairs={repairs}
               />
               
               <Content 
                 currentUser={userLast} 
                 repairs={searchedRepair} 
                 setRepairs={setRepairs}
+                getRepairs={getRepairs}
               />
 
             </div>

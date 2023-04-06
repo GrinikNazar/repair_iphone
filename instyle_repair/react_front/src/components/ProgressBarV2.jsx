@@ -4,7 +4,7 @@ import "../styles/ProgressBar.css"
 
 const ProgressBarV2 = ({timeCreate, timeWork, master, changeProgressBar}) => {
   const [startTime, setStartTime] = useState(moment(timeCreate)); // початкова точка в часі
-  const [endTime, setEndTime] = useState(moment(timeCreate).add(timeWork, 'minutes')); // кінцева точка в часі
+  const [endTime, setEndTime] = useState(moment(timeCreate).add(timeWork, 'hours')); // кінцева точка в часі
   const [currentTime, setCurrentTime] = useState(moment()); // поточний час
   const [progress, setProgress] = useState(); // стан прогресу
 

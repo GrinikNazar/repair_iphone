@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const Sidebar = function ({activeMasters, activeShops, setActiveMasters, setActiveShops, setSidebarResult}) {
+const Sidebar = function ({activeMasters, activeShops, setActiveMasters, setActiveShops, setSidebarResult, repairs}) {
 
     // Список майстрів і магазинів які отримуються з запиту
     const [mastersAndShops, setMastersAndShops] = useState({'shops': [], 'masters': []})
@@ -10,9 +10,25 @@ const Sidebar = function ({activeMasters, activeShops, setActiveMasters, setActi
         setMastersAndShops({'shops': response.data.shops, 'masters': response.data.masters})
     }
 
+    const [repairsCount, setRepairsCount] = useState({})
+    async function getRepairsCount() {
+        const response = await axios.get('http://127.0.0.1:8000/service/api/v2/count_repairs/')
+        setRepairsCount({
+            'all': response.data.all,
+            'closed': response.data.closed,
+            'warranty': response.data.warranty,
+            'new': response.data.new,
+        })
+    }
+
     useEffect( () => {
         getMastersAndShopsApi()
       }, [])
+
+
+    useEffect( () => {
+        getRepairsCount()
+    }, [repairs])
 
 
     // Активні кнопки майстрів або магазинів
@@ -27,9 +43,9 @@ const Sidebar = function ({activeMasters, activeShops, setActiveMasters, setActi
     // Сайдбар з одиничним вибором
     const listSB = [
         {id: 1, name: 'Всі', active: true, nameStatus: 'all'},
-        {id: 2, name: 'Виконані', active: false, nameStatus: 'closed'},
-        {id: 3, name: 'Гарантійні', active: false, nameStatus: 'warranty'},
-        {id: 4, name: 'Не прийняті', active: false, nameStatus: 'new'},
+        {id: 2, name: 'Виконані', active: false, nameStatus: 'closed',},
+        {id: 3, name: 'Гарантійні', active: false, nameStatus: 'warranty',},
+        {id: 4, name: 'Не прийняті', active: false, nameStatus: 'new',},
     ]
     const [listSideBar, setListSideBar] = useState(listSB)
     const sidebarItemChange = (sidebarItem) => {
@@ -56,7 +72,7 @@ const Sidebar = function ({activeMasters, activeShops, setActiveMasters, setActi
                                     className={sidebarItem.active ?"repairs-sidebar__link done" : "repairs-sidebar__link"}
                                     onClick={() => sidebarItemChange(sidebarItem)} 
                                 >
-                                    {sidebarItem.name}
+                                    {sidebarItem.name} [{repairsCount[sidebarItem.nameStatus]}]
                                 </a>
                             </div>
                         )}

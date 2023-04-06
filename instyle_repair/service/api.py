@@ -1,3 +1,5 @@
+from itertools import chain
+
 from rest_framework.views import APIView
 from .models import Repair, Shop
 from rest_framework import viewsets
@@ -43,6 +45,11 @@ class RepairView(APIView):
 
         else:
             all_repair = repairs
+
+        other_repair = all_repair.exclude(status='closed')
+        closed_repair = all_repair.filter(status='closed').order_by('-warranty', '-time_end')
+
+        all_repair = list(chain(other_repair, closed_repair))
 
         serializer = RepairSerializer(all_repair, many=True)
 
@@ -92,3 +99,23 @@ class AddMaster(APIView):
         serializer = RepairSerializer(repair)
 
         return Response(serializer.data)
+
+
+class CountRepairs(APIView):
+    def get(self, request):
+        all_repairs = Repair.objects.all()
+
+        json_out = {
+            'all': str(len(all_repairs)),
+            'closed': len(all_repairs.filter(status='closed')),
+            'warranty': len(all_repairs.filter(warranty=True)),
+            'new': len(all_repairs.filter(status='new')),
+        }
+
+        return Response(json_out)
+
+
+
+
+
+

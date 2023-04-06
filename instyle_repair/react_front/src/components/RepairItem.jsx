@@ -38,7 +38,7 @@ const RepairItem = function ({repair, applyRepair}) {
                 </div>
 
                 <div className={`body-item__parameters parameters-item ${repair.warranty ? "worranty" : ""}`}>
-                    <div className="parameters-item__model-parameter">{repair.model}</div>
+                    <div className="parameters-item__model-parameter">{repair.model}({repair.imei})</div>
                     <div className={`parameters-item__malfunction-parameter ${repair.warranty ? "warranty" : ""}`}>{repair.defect}</div>
                     <div className="parameters-item__passAndTimes passAndTimes">
                     <div className="passAndTimes__password">{repair.password}</div>
