@@ -1,5 +1,4 @@
 from itertools import chain
-
 from rest_framework.views import APIView
 from .models import Repair, Shop
 from rest_framework import viewsets
@@ -69,9 +68,9 @@ class ShopsAndMastersAPI(APIView):
 
 
 class CurrentUser(APIView):
-    def post(self, request):
+    def get(self, request):
         masters = CustomUser.objects.filter(groups__name='Майстри')
-        user_id = request.data['user']
+        user_id = request.GET['user']
         master = masters.get(pk=user_id)
         return Response(
             {'name': master.name}

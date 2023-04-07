@@ -485,7 +485,7 @@ body {
 .search-icon-image {
   width: 19px;
   height: 19px;
-  background: url("../img/header/search.png") center no-repeat;
+  background: url("../img/header/search.svg") center no-repeat;
 }
 @media (max-width: 1100px) {
   .header__search {

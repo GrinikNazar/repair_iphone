@@ -1,14 +1,10 @@
-import axios from "axios";
 import RepairItem from "./RepairItem";
+import Repairs from "../API/Repairs";
 
 const Content = function ({currentUser, repairs, setRepairs, getRepairs}) {
 
     async function applyRepair(repairId, status) {
-        const response = await axios.post('http://127.0.0.1:8000/service/api/v2/apply_master/', {
-            'repair_id': repairId,
-            'master_id': currentUser.userId,
-            'status': status
-        })
+        const response = await Repairs.applyRepair(repairId, status, currentUser)
 
         setRepairs(repairList => {
             const newRepList = repairList.map(repair => {

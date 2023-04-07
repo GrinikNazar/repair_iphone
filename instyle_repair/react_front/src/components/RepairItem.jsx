@@ -64,13 +64,15 @@ const RepairItem = function ({repair, applyRepair}) {
                     <div className="body-item__actions actions-item ">
                         <div className="actions-item__worker">{repair.master.name}</div>
                         {repair.status === "closed" ? (
-                            <div className="actions-item__button button-done">Виконаний</div>
+                            <div className="actions-item__button button-done">
+                                Виконаний
+                            </div>
                         ): (
                             <div 
-                            className="actions-item__button button-close"
-                            onClick={() => applyRepair(repair.id, repair.status)}
+                                className="actions-item__button button-close"
+                                onClick={() => applyRepair(repair.id, repair.status)}
                             >
-                            Закрити
+                                Закрити
                             </div>
                         )}
                     </div>

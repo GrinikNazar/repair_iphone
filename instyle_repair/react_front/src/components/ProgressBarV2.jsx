@@ -13,9 +13,7 @@ const ProgressBarV2 = ({timeCreate, timeWork, master, changeProgressBar}) => {
       setCurrentTime(moment()); // отримуємо поточний час кожну секунду
     }, 10);
     return () => clearInterval(interval);
-
   }, []);
-
 
   useEffect(() => {
     if (progress >= 100) {
@@ -32,8 +30,6 @@ const ProgressBarV2 = ({timeCreate, timeWork, master, changeProgressBar}) => {
     const elapsedDuration = moment.duration(currentTime.diff(startTime)); // обчислюємо пройдений час в мілісекундах
     const currentProgress = (elapsedDuration.asSeconds() / totalDuration.asSeconds()) * 100; // обчислюємо прогрес від 0 до 100
     setProgress(currentProgress);
-
-    
 
   }, [currentTime, startTime, endTime]);
 

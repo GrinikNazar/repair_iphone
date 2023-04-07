@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Content from "./components/Content";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
@@ -6,6 +6,10 @@ import "./styles/App.css"
 import axios from "axios";
 import LoginForm from "./components/LoginForm";
 import jwt_decode from 'jwt-decode';
+import MasterApi from "./API/MastersAndShops";
+import Login from "./API/Login";
+import Repairs from "./API/Repairs";
+
 
 function App() {
 
@@ -14,22 +18,14 @@ function App() {
   async function getName () {
     const token = localStorage.getItem('token')
     const decodeToken = jwt_decode(token)
-    const response = await axios.post('http://127.0.0.1:8000/service/api/v2/get_current_user/', {
-      user: decodeToken.user_id
-    })
-    setUserLast({'name': response.data.name, 'userId': decodeToken.user_id})
+    const responseData = await MasterApi.getNameMaster(decodeToken.user_id)
+    setUserLast({'name': responseData.name, 'userId': decodeToken.user_id})
   }
-
-  const [searchValue, setSearchValue] = useState('')
 
 
   // Логін
   async function handleLogin (username, password) {
-    const response = await axios.post('http://127.0.0.1:8000/api/token/', {
-      username: username,
-      password: password
-    })
-
+    const response = await Login.login(username, password)
     if (response.status === 200) {
       const token = response.data.access
       localStorage.setItem('token', token);
@@ -52,6 +48,7 @@ function App() {
     }
   }
 
+
   //Частина з ремонтами
   const [activeMasters, setActiveMasters] = useState([])
   const [activeShops, setActiveShops] = useState([])
@@ -59,23 +56,13 @@ function App() {
   const [repairs, setRepairs] = useState([])
 
   async function getRepairs() {
-      const response = await axios.get('http://127.0.0.1:8000/service/api/v2/get_rep/', {
-        params: {
-          'sidebar': sidebarResult,
-          'masters': activeMasters.join(','),
-          'shops': activeShops.join(','),
-        }
-      })
+      const response = await Repairs.getRepairs(sidebarResult, activeMasters, activeShops)
       setRepairs(response.data)
   }
 
   useEffect( () => {
-    getRepairs()
-  }, [sidebarResult, activeMasters, activeShops])
-
-
-  useEffect( () => {
     getName()
+    getRepairs()
 
     const interval = setInterval(() => {
       getRepairs()
@@ -84,6 +71,8 @@ function App() {
 
   }, [activeMasters, activeShops, sidebarResult])
 
+
+  const [searchValue, setSearchValue] = useState('')
   const searchedRepair = useMemo( () => {
     const imeiRepairs = repairs.filter(repair => repair.imei.includes(searchValue.toLowerCase()) || repair.number.includes(searchValue))
     return imeiRepairs
