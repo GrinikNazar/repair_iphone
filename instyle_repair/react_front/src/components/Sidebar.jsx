@@ -1,17 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Repairs from "../API/Repairs";
-import MasterApi from "../API/MastersAndShops";
 import SidebarButton from "./UI/buttons/SidebarButton";
 
 
-const Sidebar = function ({activeMasters, activeShops, setActiveMasters, setActiveShops, setSidebarResult, repairs}) {
-
-    // Список майстрів і магазинів які отримуються з запиту
-    const [mastersAndShops, setMastersAndShops] = useState({'shops': [], 'masters': []})
-    async function getMastersAndShopsApi() {
-        const response = await MasterApi.getAllMAndShops()
-        setMastersAndShops({'shops': response.data.shops, 'masters': response.data.masters})
-    }
+const Sidebar = function ({activeMasters, activeShops, setActiveMasters, setActiveShops, setSidebarResult, repairs, mastersAndShops}) {
 
     const [repairsCount, setRepairsCount] = useState({})
     async function getRepairsCount() {
@@ -21,13 +13,9 @@ const Sidebar = function ({activeMasters, activeShops, setActiveMasters, setActi
             'closed': response.data.closed,
             'warranty': response.data.warranty,
             'new': response.data.new,
+            'inprogress': response.data.inprogress,
         })
     }
-
-    useEffect( () => {
-        getMastersAndShopsApi()
-    }, [])
-
 
     useEffect( () => {
         getRepairsCount()
@@ -37,6 +25,7 @@ const Sidebar = function ({activeMasters, activeShops, setActiveMasters, setActi
     // Сайдбар з одиничним вибором
     const listSB = [
         {id: 1, name: 'Всі', active: true, nameStatus: 'all'},
+        {id: 5, name: 'В роботі', active: false, nameStatus: 'inprogress'},
         {id: 2, name: 'Виконані', active: false, nameStatus: 'closed',},
         {id: 3, name: 'Гарантійні', active: false, nameStatus: 'warranty',},
         {id: 4, name: 'Не прийняті', active: false, nameStatus: 'new',},
@@ -81,7 +70,8 @@ const Sidebar = function ({activeMasters, activeShops, setActiveMasters, setActi
                                 <SidebarButton key={shop.id} 
                                     activeItem={activeShops}
                                     setActiveItem={setActiveShops} 
-                                    target={shop} 
+                                    target={shop}
+                                    activeCount={shop.count_active}
                                 />
                             )}
                         </div>
@@ -94,7 +84,8 @@ const Sidebar = function ({activeMasters, activeShops, setActiveMasters, setActi
                                 <SidebarButton key={master.id} 
                                    activeItem={activeMasters}
                                    setActiveItem={setActiveMasters} 
-                                   target={master} 
+                                   target={master}
+                                   activeCount={master.count_active}
                                />
                            )}
                         </div>

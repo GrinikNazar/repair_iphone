@@ -3,7 +3,6 @@ import Content from "./components/Content";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import "./styles/App.css"
-import axios from "axios";
 import LoginForm from "./components/LoginForm";
 import jwt_decode from 'jwt-decode';
 import MasterApi from "./API/MastersAndShops";
@@ -48,6 +47,14 @@ function App() {
     }
   }
 
+  
+  // Список майстрів і магазинів які отримуються з запиту
+  const [mastersAndShops, setMastersAndShops] = useState({'shops': [], 'masters': []})
+  async function getMastersAndShopsApi() {
+      const response = await MasterApi.getAllMAndShops()
+      setMastersAndShops({'shops': response.data.shops, 'masters': response.data.masters})
+  }
+
 
   //Частина з ремонтами
   const [activeMasters, setActiveMasters] = useState([])
@@ -63,9 +70,11 @@ function App() {
   useEffect( () => {
     getName()
     getRepairs()
+    getMastersAndShopsApi() 
 
     const interval = setInterval(() => {
       getRepairs()
+      getMastersAndShopsApi()
     }, 5000);
     return () => clearInterval(interval)
 
@@ -101,6 +110,7 @@ function App() {
                 setActiveShops={setActiveShops}
                 setSidebarResult={setSidebarResult}
                 repairs={repairs}
+                mastersAndShops={mastersAndShops}
               />
               
               <Content 

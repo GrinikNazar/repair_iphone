@@ -20,9 +20,14 @@ class RepairView(APIView):
         elif sidebar == 'closed':
             repairs = Repair.objects.filter(status='closed').order_by('-warranty', '-time_end')
         elif sidebar == 'warranty':
-            repairs = Repair.objects.filter(warranty=True).order_by('-warranty', '-time_create')
+            repairs = Repair.objects.filter(warranty=True).order_by('-time_create')
+            repairs = repairs.exclude(status='closed')
         elif sidebar == 'new':
             repairs = Repair.objects.filter(status='new').order_by('-warranty', '-time_create')
+        elif sidebar == 'inprogress':
+            masters = CustomUser.objects.filter(groups__name='Майстри')
+            masters = [int(master.id) for master in masters]
+            repairs = Repair.objects.filter(master__in=masters).exclude(status='closed').order_by('-warranty', '-time_create')
 
         masters = request.GET['masters']
         shops = request.GET['shops']
@@ -60,8 +65,21 @@ class ShopsAndMastersAPI(APIView):
         shops = Shop.objects.all()
         masters = CustomUser.objects.filter(groups__name='Майстри')
         json_out = {
-            'shops': [{'id': shop.pk, 'name': shop.name} for shop in shops],
-            'masters': [{'id': master.pk, 'name': master.name} for master in masters]
+            'shops': [
+                {
+                    'id': shop.pk,
+                    'name': shop.name,
+                    'count_active': len(Repair.objects.filter(shop=shop.pk).exclude(status='closed'))
+                } for shop in shops
+            ],
+
+            'masters': [
+                {
+                    'id': master.pk,
+                    'name': master.name,
+                    'count_active': len(Repair.objects.filter(master=master.pk).exclude(status='closed'))
+                } for master in masters
+            ]
         }
 
         return Response(json_out)
@@ -103,12 +121,15 @@ class AddMaster(APIView):
 class CountRepairs(APIView):
     def get(self, request):
         all_repairs = Repair.objects.all()
+        masters = CustomUser.objects.filter(groups__name='Майстри')
+        masters = [int(master.id) for master in masters]
 
         json_out = {
             'all': str(len(all_repairs)),
             'closed': len(all_repairs.filter(status='closed')),
-            'warranty': len(all_repairs.filter(warranty=True)),
+            'warranty': len(all_repairs.filter(warranty=True).exclude(status='closed')),
             'new': len(all_repairs.filter(status='new')),
+            'inprogress': len(all_repairs.filter(master__in=masters).exclude(status='closed')),
         }
 
         return Response(json_out)
