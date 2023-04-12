@@ -44,9 +44,12 @@ def parser_fom_telegram(text):
     shops = {
         "inStyle": 1,
         "inStyle NEW": 2,
+        "Снятин": 3,
+        "inStyle Kovel": 4,
     }
 
     data['shop'] = shops[data['shop']]
+    data['model'] = ''.join(data['model'].split('(')[0])
 
     try:
         x = []

@@ -8,7 +8,7 @@ class RepairAdmin(admin.ModelAdmin):
 
 
 class ShopAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('id', 'name')
 
 
 admin.site.register(Repair, RepairAdmin)

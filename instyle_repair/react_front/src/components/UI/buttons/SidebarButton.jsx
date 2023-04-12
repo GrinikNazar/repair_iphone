@@ -20,7 +20,11 @@ const SidebarButton = function ({activeItem, target, setActiveItem, activeCount}
         >
             <div className='content-button'>
                 <div className="button-item">{target.name}</div>
-                <span className="button-count">{activeCount}</span>
+                {activeCount !== 0 
+                    ? <span className="button-count">{activeCount}</span>
+                    : <span></span>
+                }
+
             </div>
         </button>
     )

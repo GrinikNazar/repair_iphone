@@ -1,7 +1,7 @@
 import RepairItem from "./RepairItem";
 import Repairs from "../API/Repairs";
 
-const Content = function ({currentUser, repairs, setRepairs, getRepairs}) {
+const Content = function ({currentUser, repairs, setRepairs, getRepairs, getMastersAndShopsApi}) {
 
     async function applyRepair(repairId, status) {
         const response = await Repairs.applyRepair(repairId, status, currentUser)
@@ -16,8 +16,13 @@ const Content = function ({currentUser, repairs, setRepairs, getRepairs}) {
             return newRepList
         })
 
+        if (response.data.status === 'accepted') {
+            getMastersAndShopsApi()
+        }
+
         if (status === 'accepted') {
             getRepairs()
+            getMastersAndShopsApi()
         }
     }
 

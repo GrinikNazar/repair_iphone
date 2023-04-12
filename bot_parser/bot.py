@@ -37,7 +37,6 @@ def post_request(message):
 
 
 if __name__ == '__main__':
-
     while True:
         try:
             bot.infinity_polling(timeout=10)

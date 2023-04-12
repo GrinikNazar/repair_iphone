@@ -1,3 +1,7 @@
+import React from "react";
+import { Link } from "react-router-dom";
+
+
 const Header = function ({username, exitFunc, searchValue, setSearchValue}) {
 
     return (
@@ -22,9 +26,9 @@ const Header = function ({username, exitFunc, searchValue, setSearchValue}) {
                 <nav className="menu__body">
                     <div className="menu__list-login">{username}</div>
                     <ul className="menu__list">
-                        <li><a href="" className="menu__link">Всі ремонти</a></li>
-                        <li><a href="" className="menu__link">Мої ремонти</a></li>
-                        <li><a href="" className="menu__link">Статистика</a></li>
+                        <li><Link to="/all" className="menu__link">Всі ремонти</Link></li>
+                        <li><Link to="/my" className="menu__link">Мої ремонти</Link></li>
+                        <li><Link to="/statistic" className="menu__link">Статистика</Link></li>
                     </ul>
                     <a href="" className="menu__list-exit" onClick={() => exitFunc()}>Вихід</a>
                 </nav>
