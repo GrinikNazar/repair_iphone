@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import "./styles/App.css"
 import { Route, Routes } from "react-router-dom";
 import AllRepairs from "./pages/AllRepairs";
@@ -14,16 +14,25 @@ function App() {
 
   // Шапка
   const [userLast, setUserLast] = useState({'name': '', 'userId': null})
+  const currentUser = useRef({})
   async function getName () {
     const token = localStorage.getItem('token')
     const decodeToken = jwt_decode(token)
     const responseData = await MasterApi.getNameMaster(decodeToken.user_id)
     setUserLast({'name': responseData.name, 'userId': decodeToken.user_id})
+    currentUser.current = {'name': responseData.name, 'userId': decodeToken.user_id}
   }
 
   useEffect( () => {
     getName()
   }, [])
+
+  // Список майстрів і магазинів які отримуються з запиту
+  const [mastersAndShops, setMastersAndShops] = useState({'shops': [], 'masters': []})
+  async function getMastersAndShopsApi() {
+      const response = await MasterApi.getAllMAndShops()
+      setMastersAndShops({'shops': response.data.shops, 'masters': response.data.masters})
+  }
 
 
   // Логін
@@ -68,7 +77,7 @@ function App() {
         <div className="wrapper">
 
           <Header 
-            username={userLast.name} 
+            username={currentUser.current} 
             exitFunc={handleLogout} 
             searchValue={searchValue} 
             setSearchValue={setSearchValue}
@@ -83,13 +92,22 @@ function App() {
                     repairs={repairs} 
                     setRepairs={setRepairs}
                     searchedRepair={searchedRepair}
-                    userLast={userLast}
-                  />
-                }/>
+                    userLast={currentUser.current}
+                    mastersAndShops={mastersAndShops}
+                    getMastersAndShopsApi={getMastersAndShopsApi}
+                  />}
+                />
 
                 <Route path="/my" element={
-                  <MyRepairs/>
-                }/>
+                  <MyRepairs
+                    repairs={repairs}
+                    setRepairs={setRepairs}
+                    searchedRepair={searchedRepair}
+                    currentUser={userLast}
+                    mastersAndShops={mastersAndShops}
+                    getMastersAndShopsApi={getMastersAndShopsApi}
+                  />}
+                />
 
               </Routes>
 

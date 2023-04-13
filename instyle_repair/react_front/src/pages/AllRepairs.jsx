@@ -1,18 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Content from "../components/Content";
 import Sidebar from "../components/Sidebar";
-import MasterApi from "../API/MastersAndShops";
 import Repairs from "../API/Repairs";
 
 
-function AllRepairs({repairs, setRepairs, searchedRepair, userLast}) {
-  
-  // Список майстрів і магазинів які отримуються з запиту
-  const [mastersAndShops, setMastersAndShops] = useState({'shops': [], 'masters': []})
-  async function getMastersAndShopsApi() {
-      const response = await MasterApi.getAllMAndShops()
-      setMastersAndShops({'shops': response.data.shops, 'masters': response.data.masters})
-  }
+function AllRepairs({repairs, setRepairs, searchedRepair, userLast, mastersAndShops, getMastersAndShopsApi}) {
 
 
   //Частина з ремонтами

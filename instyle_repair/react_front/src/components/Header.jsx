@@ -24,7 +24,7 @@ const Header = function ({username, exitFunc, searchValue, setSearchValue}) {
 
                 <div className="header__menu menu">
                 <nav className="menu__body">
-                    <div className="menu__list-login">{username}</div>
+                    <div className="menu__list-login">{username.name}</div>
                     <ul className="menu__list">
                         <li><Link to="/all" className="menu__link">Всі ремонти</Link></li>
                         <li><Link to="/my" className="menu__link">Мої ремонти</Link></li>
