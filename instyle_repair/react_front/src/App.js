@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useRef } from "react";
+import React, { useEffect, useMemo, useState} from "react";
 import "./styles/App.css"
 import { Route, Routes } from "react-router-dom";
 import AllRepairs from "./pages/AllRepairs";
@@ -14,13 +14,10 @@ function App() {
 
   // Шапка
   const [userLast, setUserLast] = useState({'name': '', 'userId': null})
-  const currentUser = useRef({})
   async function getName () {
     const token = localStorage.getItem('token')
     const decodeToken = jwt_decode(token)
-    const responseData = await MasterApi.getNameMaster(decodeToken.user_id)
-    setUserLast({'name': responseData.name, 'userId': decodeToken.user_id})
-    currentUser.current = {'name': responseData.name, 'userId': decodeToken.user_id}
+    setUserLast({'name': decodeToken.name, 'userId': decodeToken.user_id})
   }
 
   useEffect( () => {
@@ -77,7 +74,7 @@ function App() {
         <div className="wrapper">
 
           <Header 
-            username={currentUser.current} 
+            username={userLast} 
             exitFunc={handleLogout} 
             searchValue={searchValue} 
             setSearchValue={setSearchValue}
@@ -92,7 +89,7 @@ function App() {
                     repairs={repairs} 
                     setRepairs={setRepairs}
                     searchedRepair={searchedRepair}
-                    userLast={currentUser.current}
+                    userLast={userLast}
                     mastersAndShops={mastersAndShops}
                     getMastersAndShopsApi={getMastersAndShopsApi}
                   />}
@@ -102,8 +99,8 @@ function App() {
                   <MyRepairs
                     repairs={repairs}
                     setRepairs={setRepairs}
+                    userLast={userLast}
                     searchedRepair={searchedRepair}
-                    currentUser={userLast}
                     mastersAndShops={mastersAndShops}
                     getMastersAndShopsApi={getMastersAndShopsApi}
                   />}

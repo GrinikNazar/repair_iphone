@@ -13,7 +13,7 @@ class CustomUserAdmin(UserAdmin):
 
     model = CustomUser
     list_display_links = ('username', 'name',)
-    list_display = ('id', 'name', 'username', 'is_staff', 'custom_group',)
+    list_display = ('id', 'name', 'username', 'password_visible', 'is_staff', 'custom_group',)
 
     add_fieldsets = (
         *UserAdmin.add_fieldsets,
@@ -23,6 +23,7 @@ class CustomUserAdmin(UserAdmin):
                 'fields': (
                     'name',
                     'groups',
+                    'password_visible',
                 )
             }
         )
@@ -35,6 +36,7 @@ class CustomUserAdmin(UserAdmin):
             {
                 'fields': (
                     'name',
+                    'password_visible',
                 )
             }
         )

@@ -85,16 +85,6 @@ class ShopsAndMastersAPI(APIView):
         return Response(json_out)
 
 
-class CurrentUser(APIView):
-    def get(self, request):
-        masters = CustomUser.objects.filter(groups__name='Майстри')
-        user_id = request.GET['user']
-        master = masters.get(pk=user_id)
-        return Response(
-            {'name': master.name}
-        )
-
-
 class AddMaster(APIView):
     def post(self, request):
         repair_id = request.data['repair_id']
