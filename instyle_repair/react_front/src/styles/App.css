@@ -660,10 +660,14 @@ body {
   font-size: 15px;
   transition: all 0.3s ease 0s;
   display: inline-block;
+  color: rgb(174, 172, 172);
+}
+.menu__link.active {
+  color: #fff;
 }
 .menu__link:hover {
   transform: scale(1.05);
-  color: rgb(174, 172, 172);
+  color: rgb(250, 88, 88);
 }
 .menu__list-exit {
   flex: 0 1 110px;

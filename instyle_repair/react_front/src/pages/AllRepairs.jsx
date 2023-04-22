@@ -4,7 +4,7 @@ import Sidebar from "../components/Sidebar";
 import Repairs from "../API/Repairs";
 
 
-function AllRepairs({repairs, setRepairs, searchedRepair, userLast, mastersAndShops, getMastersAndShopsApi}) {
+function AllRepairs({repairs, setRepairs, searchedRepair, userLast, mastersAndShops, getMastersAndShopsApi, setHeaderLinks}) {
 
 
   //Частина з ремонтами
@@ -18,6 +18,7 @@ function AllRepairs({repairs, setRepairs, searchedRepair, userLast, mastersAndSh
   }
 
   useEffect( () => {
+    setHeaderLinks('/all')
     getRepairs()
     getMastersAndShopsApi() 
 
@@ -40,6 +41,7 @@ function AllRepairs({repairs, setRepairs, searchedRepair, userLast, mastersAndSh
             setSidebarResult={setSidebarResult}
             repairs={repairs}
             mastersAndShops={mastersAndShops}
+            userLast={userLast}
         />
         
         <Content 

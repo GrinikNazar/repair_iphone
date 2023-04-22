@@ -1,4 +1,6 @@
 from itertools import chain
+
+from django.utils.datastructures import MultiValueDictKeyError
 from rest_framework.views import APIView
 from .models import Repair, Shop
 from rest_framework import viewsets
@@ -27,7 +29,8 @@ class RepairView(APIView):
         elif sidebar == 'inprogress':
             masters = CustomUser.objects.filter(groups__name='Майстри')
             masters = [int(master.id) for master in masters]
-            repairs = Repair.objects.filter(master__in=masters).exclude(status='closed').order_by('-warranty', '-time_create')
+            repairs = Repair.objects.filter(master__in=masters).exclude(status='closed').order_by('-warranty',
+                                                                                                  '-time_create')
 
         masters = request.GET['masters']
         shops = request.GET['shops']
@@ -51,7 +54,7 @@ class RepairView(APIView):
             all_repair = repairs
 
         other_repair = all_repair.exclude(status='closed')
-        closed_repair = all_repair.filter(status='closed').order_by('-warranty', '-time_end')
+        closed_repair = all_repair.filter(status='closed').order_by('-time_end')
 
         all_repair = list(chain(other_repair, closed_repair))
 
@@ -62,14 +65,23 @@ class RepairView(APIView):
 
 class ShopsAndMastersAPI(APIView):
     def get(self, request):
+
+        try:
+            master = request.GET['master']
+        except MultiValueDictKeyError:
+            master = None
+
         shops = Shop.objects.all()
         masters = CustomUser.objects.filter(groups__name='Майстри')
+
         json_out = {
             'shops': [
                 {
                     'id': shop.pk,
                     'name': shop.name,
-                    'count_active': len(Repair.objects.filter(shop=shop.pk).exclude(status='closed'))
+                    'count_active': len(Repair.objects.filter(shop=shop.pk).exclude(
+                        status='closed') if not master else Repair.objects.filter(shop=shop.pk).exclude(
+                        status='closed').filter(master=master))
                 } for shop in shops
             ],
 
@@ -114,18 +126,27 @@ class CountRepairs(APIView):
         masters = CustomUser.objects.filter(groups__name='Майстри')
         masters = [int(master.id) for master in masters]
 
-        json_out = {
-            'all': str(len(all_repairs)),
-            'closed': len(all_repairs.filter(status='closed')),
-            'warranty': len(all_repairs.filter(warranty=True).exclude(status='closed')),
-            'new': len(all_repairs.filter(status='new')),
-            'inprogress': len(all_repairs.filter(master__in=masters).exclude(status='closed')),
-        }
+        try:
+            master = request.GET['master']
+        except MultiValueDictKeyError:
+            master = None
+
+        if master:
+            json_out = {
+                'all': str(len(all_repairs.filter(master=master))),
+                'closed': len(all_repairs.filter(status='closed').filter(master=master)),
+                'warranty': len(all_repairs.filter(warranty=True).exclude(status='closed').filter(master=master)),
+                'new': len(all_repairs.filter(status='new')),
+                'inprogress': len(
+                    all_repairs.filter(master__in=masters).exclude(status='closed').filter(master=master)),
+            }
+        else:
+            json_out = {
+                'all': str(len(all_repairs)),
+                'closed': len(all_repairs.filter(status='closed')),
+                'warranty': len(all_repairs.filter(warranty=True).exclude(status='closed')),
+                'new': len(all_repairs.filter(status='new')),
+                'inprogress': len(all_repairs.filter(master__in=masters).exclude(status='closed')),
+            }
 
         return Response(json_out)
-
-
-
-
-
-

@@ -4,26 +4,25 @@ import Content from "../components/Content";
 import Sidebar from "../components/Sidebar";
 import jwt_decode from 'jwt-decode';
 
-const MyRepairs = function ({repairs, setRepairs, searchedRepair, mastersAndShops, getMastersAndShopsApi}) {
+const MyRepairs = function ({repairs, setRepairs, searchedRepair, mastersAndShops, getMastersAndShopsApi, setHeaderLinks}) {
 
     const [activeMasters, setActiveMasters] = useState([])
     const [activeShops, setActiveShops] = useState([])
     const [sidebarResult, setSidebarResult] = useState('all')
     const [user, setUser] = useState({'name': '', 'id': ''})
 
-  
     async function getRepairs() {
         const token = localStorage.getItem('token')
         const decodeToken = jwt_decode(token)
         const response = await Repairs.getRepairs(sidebarResult, [decodeToken.user_id], activeShops)
+        getMastersAndShopsApi(decodeToken.user_id)
         setRepairs(response.data)
         setUser({'name': decodeToken.name, 'userId': decodeToken.user_id})
     }
 
-
     useEffect( () => {
+        setHeaderLinks('/my')
         getRepairs()
-        getMastersAndShopsApi()
     
     }, [activeMasters, activeShops, sidebarResult])
 
@@ -31,12 +30,13 @@ const MyRepairs = function ({repairs, setRepairs, searchedRepair, mastersAndShop
     return (
         <div>
             <Sidebar
-                activeMasters={activeMasters}
+                activeMasters={null}
                 activeShops={activeShops}
                 setActiveShops={setActiveShops}
                 setSidebarResult={setSidebarResult}
                 repairs={repairs}
                 mastersAndShops={mastersAndShops}
+                userLast={user}
             />
             <Content 
                 currentUser={user} 

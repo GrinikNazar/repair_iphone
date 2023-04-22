@@ -1,14 +1,35 @@
-import React from "react";
+import React, { useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 
 
-const Header = function ({username, exitFunc, searchValue, setSearchValue}) {
+const Header = function ({username, exitFunc, searchValue, setSearchValue, headerLinks}) {
+
+    const listHeader = [
+        {id: 1, name: 'Всі ремонти', active: false, link: '/all'},
+        {id: 2, name: 'Мої ремонти', active: false, link: '/my'},
+        {id: 3, name: 'Статистика', active: false, link: '/statistic'},
+    ]
+
+    const [listHeaderMenu, setListHeaderMenu] = useState(listHeader)
+
+    const headerMenuChange = (headerItem) => {
+        setListHeaderMenu(listHeaderMenu =>
+            listHeaderMenu.map(item =>
+                item.link === headerItem
+                ? {...item, active: true}
+                : {...item, active: false})
+        )
+    }
+
+    useEffect( () => {
+        headerMenuChange(headerLinks)
+    }, [headerLinks])
 
     return (
         <header className="header">
             <div className="header__container">
 
-                <a href="#" className="header__logo">
+                <a href="/all" className="header__logo">
                 INSTYLE <span>REPAIR</span>
                 </a>
 
@@ -26,9 +47,16 @@ const Header = function ({username, exitFunc, searchValue, setSearchValue}) {
                 <nav className="menu__body">
                     <div className="menu__list-login">{username.name}</div>
                     <ul className="menu__list">
-                        <li><Link to="/all" className="menu__link">Всі ремонти</Link></li>
-                        <li><Link to="/my" className="menu__link">Мої ремонти</Link></li>
-                        <li><Link to="/statistic" className="menu__link">Статистика</Link></li>
+                        {listHeaderMenu.map( (headerMenuItem, index) => 
+                            <li key={index}>
+                                <Link
+                                    to={headerMenuItem.link} 
+                                    className={headerMenuItem.active ? "menu__link active" : "menu__link"}
+                                >
+                                    {headerMenuItem.name}
+                                </Link>
+                            </li>
+                        )}
                     </ul>
                     <a href="" className="menu__list-exit" onClick={() => exitFunc()}>Вихід</a>
                 </nav>

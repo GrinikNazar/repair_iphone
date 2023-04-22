@@ -3,11 +3,11 @@ import Repairs from "../API/Repairs";
 import SidebarButton from "./UI/buttons/SidebarButton";
 
 
-const Sidebar = function ({activeMasters, activeShops, setActiveMasters, setActiveShops, setSidebarResult, repairs, mastersAndShops}) {
+const Sidebar = function ({activeMasters, activeShops, setActiveMasters, setActiveShops, setSidebarResult, repairs, mastersAndShops, userLast}) {
 
     const [repairsCount, setRepairsCount] = useState({})
     async function getRepairsCount() {
-        const response = await Repairs.getCountRepairs()
+        const response = await Repairs.getCountRepairs(userLast.userId, activeMasters)
         setRepairsCount({
             'all': response.data.all,
             'closed': response.data.closed,
@@ -24,13 +24,26 @@ const Sidebar = function ({activeMasters, activeShops, setActiveMasters, setActi
 
     // Сайдбар з одиничним вибором
     const listSB = [
-        {id: 1, name: 'Всі', active: true, nameStatus: 'all'},
-        {id: 5, name: 'В роботі', active: false, nameStatus: 'inprogress'},
-        {id: 2, name: 'Виконані', active: false, nameStatus: 'closed',},
-        {id: 3, name: 'Гарантійні', active: false, nameStatus: 'warranty',},
-        {id: 4, name: 'Не прийняті', active: false, nameStatus: 'new',},
+        {id: 1, name: 'Всі', active: true, nameStatus: 'all', visible: true},
+        {id: 5, name: 'В роботі', active: false, nameStatus: 'inprogress', visible: true},
+        {id: 2, name: 'Виконані', active: false, nameStatus: 'closed', visible: true},
+        {id: 3, name: 'Гарантійні', active: false, nameStatus: 'warranty', visible: true},
+        {id: 4, name: 'Не прийняті', active: false, nameStatus: 'new', visible: false},
     ]
-    const [listSideBar, setListSideBar] = useState(listSB)
+
+    function changeVisibleSidebarMenu(listSB) {
+        if (activeMasters === null) {
+            const newList = []
+            for(let item of listSB){
+                if(item.visible === true){
+                    newList.push(item)
+                }
+            }
+            return newList
+        } else return listSB
+    }
+
+    const [listSideBar, setListSideBar] = useState(changeVisibleSidebarMenu(listSB))
     const sidebarItemChange = (sidebarItem) => {
         setListSideBar(listSideBar =>
             listSideBar.map(item =>
@@ -40,6 +53,7 @@ const Sidebar = function ({activeMasters, activeShops, setActiveMasters, setActi
         )
         setSidebarResult(sidebarItem.nameStatus)
     }
+
 
 
     return (
@@ -53,7 +67,7 @@ const Sidebar = function ({activeMasters, activeShops, setActiveMasters, setActi
                             <div key={index} className="repairs-sidebar__item ">
                                 <a  
                                     style={{cursor: 'pointer'}}
-                                    className={sidebarItem.active ?"repairs-sidebar__link done" : "repairs-sidebar__link"}
+                                    className={sidebarItem.active ? "repairs-sidebar__link done" : "repairs-sidebar__link"}
                                     onClick={() => sidebarItemChange(sidebarItem)} 
                                 >
                                     {sidebarItem.name} [{repairsCount[sidebarItem.nameStatus]}]
@@ -77,19 +91,22 @@ const Sidebar = function ({activeMasters, activeShops, setActiveMasters, setActi
                         </div>
                     </div>
 
-                    <div className="sidebar__workers workers-sidebar">
-                        <h3 className="workers-sidebar__title title">Майстри</h3>
-                        <div className="workers-sidebar__buttons">
-                           {mastersAndShops.masters.map( (master) =>
-                                <SidebarButton key={master.id} 
-                                   activeItem={activeMasters}
-                                   setActiveItem={setActiveMasters} 
-                                   target={master}
-                                   activeCount={master.count_active}
-                               />
-                           )}
+                    {activeMasters
+                    ?   <div className="sidebar__workers workers-sidebar">
+                            <h3 className="workers-sidebar__title title">Майстри</h3>
+                            <div className="workers-sidebar__buttons">
+                            {mastersAndShops.masters.map( (master) =>
+                                    <SidebarButton key={master.id} 
+                                    activeItem={activeMasters}
+                                    setActiveItem={setActiveMasters} 
+                                    target={master}
+                                    activeCount={master.count_active}
+                                />
+                            )}
+                            </div>
                         </div>
-                    </div>
+                    : <div></div>
+                    }
 
                 </div>
             </div>

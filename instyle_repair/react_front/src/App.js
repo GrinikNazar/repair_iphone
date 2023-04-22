@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState} from "react";
 import "./styles/App.css"
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import AllRepairs from "./pages/AllRepairs";
 import MyRepairs from "./pages/MyRepairs";
 import Header from "./components/Header";
@@ -8,11 +8,17 @@ import LoginForm from "./components/LoginForm";
 import jwt_decode from 'jwt-decode';
 import MasterApi from "./API/MastersAndShops";
 import Login from "./API/Login";
+import Statistic from "./pages/Statistic";
 
 
 function App() {
 
   // Шапка
+  const [headerLinks, setHeaderLinks] = useState()
+  const changeHeaderLinks = (value) => {
+    setHeaderLinks(value)
+  }
+
   const [userLast, setUserLast] = useState({'name': '', 'userId': null})
   async function getName () {
     const token = localStorage.getItem('token')
@@ -26,8 +32,8 @@ function App() {
 
   // Список майстрів і магазинів які отримуються з запиту
   const [mastersAndShops, setMastersAndShops] = useState({'shops': [], 'masters': []})
-  async function getMastersAndShopsApi() {
-      const response = await MasterApi.getAllMAndShops()
+  async function getMastersAndShopsApi(master=null) {
+      const response = await MasterApi.getAllMAndShops(master)
       setMastersAndShops({'shops': response.data.shops, 'masters': response.data.masters})
   }
 
@@ -78,6 +84,7 @@ function App() {
             exitFunc={handleLogout} 
             searchValue={searchValue} 
             setSearchValue={setSearchValue}
+            headerLinks={headerLinks}
           />
 
           <main className="page">
@@ -92,6 +99,7 @@ function App() {
                     userLast={userLast}
                     mastersAndShops={mastersAndShops}
                     getMastersAndShopsApi={getMastersAndShopsApi}
+                    setHeaderLinks={changeHeaderLinks}
                   />}
                 />
 
@@ -99,11 +107,24 @@ function App() {
                   <MyRepairs
                     repairs={repairs}
                     setRepairs={setRepairs}
-                    userLast={userLast}
                     searchedRepair={searchedRepair}
                     mastersAndShops={mastersAndShops}
                     getMastersAndShopsApi={getMastersAndShopsApi}
+                    setHeaderLinks={changeHeaderLinks}
                   />}
+                />
+
+                <Route 
+                  path="/statistic" element={
+                    <Statistic
+                      setHeaderLinks={setHeaderLinks}
+                    />
+                  }
+                />
+                
+                <Route
+                    path="*"
+                    element={<Navigate to="/all" replace />}
                 />
 
               </Routes>

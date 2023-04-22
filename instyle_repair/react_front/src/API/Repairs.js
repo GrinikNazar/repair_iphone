@@ -12,9 +12,23 @@ export default class Repairs {
         return response
     }
 
-    static async getCountRepairs() {
-        const response = await axios.get('http://127.0.0.1:8000/service/api/v2/count_repairs/')
-        return response
+    static async getCountRepairs(master, activeMasters) {
+        if (activeMasters === null){
+            const response = await axios.get('http://127.0.0.1:8000/service/api/v2/count_repairs/', {
+                params: {
+                    master: master
+                }
+            })
+            return response
+        } else {
+            const response = await axios.get('http://127.0.0.1:8000/service/api/v2/count_repairs/', {
+                params: {
+                    master: null
+                }
+                })
+            return response
+        }
+
     }
 
     static async applyRepair(repairId, status, currentUser) {
