@@ -30,7 +30,7 @@ const Sidebar = function ({activeMasters, activeShops, setActiveMasters, setActi
         {id: 3, name: 'Гарантійні', active: false, nameStatus: 'warranty', visible: true},
         {id: 4, name: 'Не прийняті', active: false, nameStatus: 'new', visible: false},
     ]
-
+    
     function changeVisibleSidebarMenu(listSB) {
         if (activeMasters === null) {
             const newList = []

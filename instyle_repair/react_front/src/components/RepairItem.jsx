@@ -88,15 +88,13 @@ const RepairItem = function ({repair, applyRepair}) {
                     <span style={{width: "100%", background: "grey"}}></span>
                 </div>
             ): (
-                <div className="item-main-content__statusbar">
-                    <a  style={{cursor: 'pointer'}}>
-                        <ProgressBarV2 
-                            timeCreate={repair.time_create.time_create} 
-                            timeWork={repair.time_work} 
-                            master={repair.master}
-                            changeProgressBar={changeProgressBar}
-                        />
-                    </a>
+                <div className="progress-bar-line">
+                    <ProgressBarV2 
+                        timeCreate={repair.time_create.time_create} 
+                        timeWork={repair.time_work} 
+                        master={repair.master}
+                        changeProgressBar={changeProgressBar}
+                    />
                 </div>
             )}
 

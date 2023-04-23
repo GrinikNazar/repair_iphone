@@ -6,7 +6,6 @@ import Repairs from "../API/Repairs";
 
 function AllRepairs({repairs, setRepairs, searchedRepair, userLast, mastersAndShops, getMastersAndShopsApi, setHeaderLinks}) {
 
-
   //Частина з ремонтами
   const [activeMasters, setActiveMasters] = useState([])
   const [activeShops, setActiveShops] = useState([])
