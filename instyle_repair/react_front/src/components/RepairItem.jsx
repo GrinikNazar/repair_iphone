@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ProgressBarV2 from "./ProgressBarV2";
 import moment from 'moment';
 
-const RepairItem = function ({repair, applyRepair}) {
+const RepairItem = function ({repair, applyRepair, setModalRepair}) {
 
     const [progressBar, setProgressBar] = useState(0)
 
@@ -26,7 +26,10 @@ const RepairItem = function ({repair, applyRepair}) {
         >
             <div className="item-main-content__body   body-item ">
                 
-                <div className="body-item__repair-details details-repair">
+                <div 
+                    className="body-item__repair-details details-repair"
+                    onClick={() => setModalRepair(true)}
+                >
                     <div className="details-repair__number">{repair.number}</div>
                     <div className="details-repair__shop">{repair.shop}</div>
                 </div>

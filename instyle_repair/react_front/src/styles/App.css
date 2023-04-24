@@ -192,7 +192,7 @@ body {
   background: linear-gradient(89.98deg, #DFECEB 30.53%, rgba(217, 217, 217, 0) 97.3%);
 }
 
-.display .popUp {
+/* .display .popUp {
   display: block;
 }
 
@@ -422,7 +422,7 @@ body {
 }
 .action-popUp__answer:hover {
   transform: scale(0.95);
-}
+} */
 
 .header {
   position: fixed;
