@@ -1,12 +1,8 @@
 import RepairItem from "./RepairItem";
 import Repairs from "../API/Repairs";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import RepairModal from "./UI/RepairModal/RepairModal";
-import { useState } from "react";
 
 const Content = function ({currentUser, repairs, setRepairs, getRepairs, getMastersAndShopsApi}) {
-
-    const [modalRepair, setModalRepair] = useState(false)
 
     async function applyRepair(repairId, status) {
         const response = await Repairs.applyRepair(repairId, status, currentUser)
@@ -35,11 +31,6 @@ const Content = function ({currentUser, repairs, setRepairs, getRepairs, getMast
         
         <div className="page__main main-content">
 
-            <RepairModal visible={modalRepair} setVisible={setModalRepair}>
-
-            </RepairModal>
-
-
             {/* <div className="main-content__items"> */}
             <TransitionGroup className="main-content__items">
                 {repairs.map( (repair) =>
@@ -48,7 +39,7 @@ const Content = function ({currentUser, repairs, setRepairs, getRepairs, getMast
                         timeout={400}
                         classNames="repairphone"
                     >
-                        <RepairItem repair={repair} applyRepair={applyRepair} setModalRepair={setModalRepair}/>
+                        <RepairItem repair={repair} applyRepair={applyRepair}/>
                     </CSSTransition>
                 )}
             </TransitionGroup>

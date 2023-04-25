@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import './RepairModal.css';
+import DetailsBlock from "../DetailsBlock/DetailsBlock";
 
 
-const RepairModal = function ({visible, setVisible}) {
+const RepairModal = function ({visible, setVisible, repair}) {
     
     const rootClasses = ['RepairModal']
 
@@ -23,44 +24,23 @@ const RepairModal = function ({visible, setVisible}) {
                     <div className="header-popUp__shop">InStyle </div>
                 </div>
                 <div className="popUp__body body-popUp">
-                    <div className="body-popUp__properties properties"> 
-                        <div className="properties__status">Статус</div>
-                        <div className="properties__timeOfReceiving">Час прийняття</div>
-                        <div className="properties__timeOfFinishing">Завершення</div>
-                        <div className="properties__model">Модель</div>
-                        <div className="properties__password">Пароль</div>
-                        <div className="properties__IMEI">IMEI</div>
-                        <div className="properties__manager manager-properties">
-                            <div className="manager-properties__title">Менеджер</div>
-                            <div className="manager-properties__name">Дмитро</div>
-                        </div>
-                        <div className="properties__client client-properties">
-                            <div className="client-properties__title">Клієнт</div>
-                            <div className="client-properties__name">Якийсь Вася</div>
-                        </div>
+
+                    <div>
+                        <DetailsBlock mutable={true} detail={repair.imei}>IMEI</DetailsBlock>
+                        <DetailsBlock mutable={true} detail={repair.model}>Модель</DetailsBlock>
+                        <DetailsBlock mutable={true}>Пароль</DetailsBlock>
                     </div>
-                    <div className="body-popUp__values values ">
-                        <div className="values__status">Статус</div>
-                        <div className="values__timeOfReceiving timeOfReceiving">
-                            <div className="timeOfReceiving__time">17:15</div>
-                            <div className="timeOfReceiving__date">25.08.2023</div>
-                        </div>
-                        <div className="values__timeOfFinishing timeOfFinishing">
-                            <div className="timeOfFinishing__time">20:00</div>
-                            <div className="timeOfFinishing__date">26.08.2023</div>
-                        </div>
-                        <div className="values__model">iPhone 11ProMax Gold</div>
-                        <div className="values__password">888888</div>
-                        <div className="values__IMEI">358426879461235</div>
-                        <div className="values__master master-value">
-                            <div className="master-value__title">Майстер</div>
-                            <div className="master-value__name">Саша</div>
-                        </div>
-                        <div className="values__telnumber telnumber-value">
-                            <div className="telnumber-value__title">№ телефону</div>
-                            <div className="telnumber-value__number">93799922</div>
-                        </div>
+                    <div>
+                        <DetailsBlock mutable={true}>Клієнт</DetailsBlock>
+                        <DetailsBlock mutable={true}>Номер телефону</DetailsBlock>
+                        <DetailsBlock mutable={true}>Час завершення</DetailsBlock>
                     </div>
+                    <div>
+                        <DetailsBlock mutable={false} detail={repair.status}>Статус</DetailsBlock>
+                        <DetailsBlock mutable={false}>Майстер</DetailsBlock> 
+                        <DetailsBlock mutable={false}>Менеджер</DetailsBlock>
+                    </div>
+
                 </div>
                 <div className="popUp__malfunction malfunction-popUp">
                     <div className="malfunction-popUp__title">Несправність</div>
@@ -68,7 +48,9 @@ const RepairModal = function ({visible, setVisible}) {
                 </div>
                 <div className="popUp__notes notes-popUp">
                     <div className="notes-popUp__title">Відписати за ремонт</div>
-                    <div className="notes-popUp__text">Ви вхуйкали свій тріпак до такої степені шо тепе це ріщє зможе лиш стіл підпирати. Можете забрати його собі і запхати собі в окуляр, кончений вилупок. Треба  з телефоном поводитись а нє як оце от...</div>
+                    <div className="notes-popUp__text">
+                        Ви вхуйкали свій тріпак до такої степені шо тепе це ріщє зможе лиш стіл підпирати. Можете забрати його собі і запхати собі в окуляр, кончений вилупок. Треба  з телефоном поводитись а нє як оце от...
+                    </div>
                 </div>
                 <div className="popUp__actions action-popUp">
                     <a href="#" className="action-popUp__close">Закрити</a>

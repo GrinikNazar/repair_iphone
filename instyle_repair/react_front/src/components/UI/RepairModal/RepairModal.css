@@ -84,83 +84,12 @@
 }
 
 .body-popUp {
-  gap: 70px;
-}
-.properties {
-  font-weight: 500;
-  font-size: 12px;
-}
-.properties__status {
-  background-color: #bdbbbb;
-}
-.properties__timeOfFinishing {
-  background-color: #bdbbbb;
-}
-.properties__password {
-  background-color: #bdbbbb;
-}
-.properties__manager {
-  background-color: #bdbbbb;
-}
-.manager-properties {
   display: flex;
-  gap: 40px;
-}
-.manager-properties__name {
-  font-weight: 400;
+  justify-content: space-between;
+  text-align: center;
+  align-self: center;
 }
 
-.client-properties {
-  display: flex;
-  justify-content: space-between;
-  gap: 40px;
-}
-.client-properties__name {
-  font-weight: 400;
-}
-
-.values {
-  font-weight: 400;
-  font-size: 12px;
-}
-.values__status {
-  background-color: #bdbbbb;
-}
-.values__timeOfFinishing {
-  background-color: #bdbbbb;
-}
-.values__password {
-  background-color: #bdbbbb;
-}
-.values__master {
-  background-color: #bdbbbb;
-}
-.timeOfReceiving {
-  display: flex;
-  gap: 20px;
-  justify-content: space-between;
-}
-.timeOfFinishing {
-  display: flex;
-  gap: 20px;
-  justify-content: space-between;
-}
-.master-value {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-}
-.master-value__title {
-  font-weight: 500;
-}
-.telnumber-value {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-}
-.telnumber-value__title {
-  font-weight: 500;
-}
 .malfunction-popUp__title {
   font-weight: 600;
   margin-bottom: 5px;

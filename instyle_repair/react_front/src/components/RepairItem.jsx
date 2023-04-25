@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import ProgressBarV2 from "./ProgressBarV2";
 import moment from 'moment';
+import RepairModal from "./UI/RepairModal/RepairModal";
 
-const RepairItem = function ({repair, applyRepair, setModalRepair}) {
 
+const RepairItem = function ({repair, applyRepair}) {
+
+    const [modalRepair, setModalRepair] = useState(false)
     const [progressBar, setProgressBar] = useState(0)
 
     const changeProgressBar = (progress) => {
@@ -12,6 +15,7 @@ const RepairItem = function ({repair, applyRepair, setModalRepair}) {
 
 
     return (
+        
         <div
             className={`main-content__item item-main-content ${
                 repair.status === "closed" 
@@ -24,6 +28,11 @@ const RepairItem = function ({repair, applyRepair, setModalRepair}) {
             }
             }`}
         >
+            
+        <RepairModal visible={modalRepair} setVisible={setModalRepair} repair={repair}>
+
+        </RepairModal>
+
             <div className="item-main-content__body   body-item ">
                 
                 <div 
