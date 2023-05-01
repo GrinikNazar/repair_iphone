@@ -32,6 +32,7 @@
   display: none;
 }
 .popUp__window {
+  font-family: 'Roboto';
   width: 50%;
   max-height: 80%;
   padding: 30px 40px;
@@ -54,6 +55,7 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
+  font-size: 17px;
 }
 .popUp__body {
   display: flex;
@@ -68,6 +70,7 @@
 .header-popUp__worranty {
   color: #FF0202;
   font-weight: 600;
+  margin-bottom: 3px;
 }
 .header-popUp__date {
   font-weight: 500;
@@ -75,13 +78,20 @@
 .header-popUp__number {
   display: flex;
   align-items: flex-end;
-  font-weight: 600;
+  font-weight: 500;
 }
 .header-popUp__shop {
   display: flex;
   align-items: flex-end;
-  font-weight: 600;
+  font-weight: 500;
+  margin-bottom: 3px;
 }
+.header-popUp__date-create {
+  display: flex;
+  align-items: flex-end;
+  font-weight: 500;
+}
+
 
 .body-popUp {
   display: flex;
@@ -93,11 +103,11 @@
 .malfunction-popUp__title {
   font-weight: 600;
   margin-bottom: 5px;
-  font-size: 12px;
+  font-size: 14px;
 }
 .malfunction-popUp__text {
-  padding: 5px;
-  font-size: 12px;
+  padding: 5px 5px 5px 10px;
+  font-size: 13px;
   background: #F2F2F2;
   border: 1px solid rgba(0, 0, 0, 0.5);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -107,15 +117,16 @@
 .notes-popUp__title {
   font-weight: 600;
   margin-bottom: 5px;
-  font-size: 12px;
+  font-size: 14px;
 }
 .notes-popUp__text {
-  padding: 5px;
-  font-size: 12px;
+  padding: 7px 5px 10px 10px;
+  font-size: 15px;
   background: #F2F2F2;
   border: 1px solid rgba(0, 0, 0, 0.5);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
+  width: 97.5%;
 }
 
 .action-popUp {
