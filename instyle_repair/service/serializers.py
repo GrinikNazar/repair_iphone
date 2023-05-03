@@ -26,6 +26,8 @@ class RepairSerializer(serializers.ModelSerializer):
             'time_create',
             'time_work',
             'time_end',
+            'vendor',
+            'customer_name',
         )
 
     def get_shop(self, obj):

@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import cl from "./DetailsBlock.module.css"
+import DetailsRepair from "../../../API/ChangeDetailsRepair";
 
 
-const DetailsBlock = function ({children, mutable, detail}) {
+const DetailsBlock = function ({children, mutable, detail, nameId, repairId}) {
 
     const [itemValue, setItemValue] = useState(detail)
 
-    function changeItem() {
-        console.log(itemValue)
+    async function changeItem() {
+       const response = await DetailsRepair.detailsRepair(nameId, repairId, itemValue)
+
+       console.log(response.status)
     }
 
     return (
@@ -28,11 +31,8 @@ const DetailsBlock = function ({children, mutable, detail}) {
                     </div>
                 </div> 
                 :
-                <div>
-                    <div className={cl.detail_input_block}>
-                        {detail}
-                    </div>
-
+                <div className={cl.detail_input_block}>
+                    {detail}
                 </div>
 
             }

@@ -13,4 +13,5 @@ urlpatterns = [
     path('api/v2/get_shops_and_masters/', ShopsAndMastersAPI.as_view()),  # http://127.0.0.1:8000/service/api/v2/get_shops_and_masters/
     path('api/v2/apply_master/', AddMaster.as_view()),  # http://127.0.0.1:8000/service/api/v2/apply_master/
     path('api/v2/count_repairs/', CountRepairs.as_view()),  # http://127.0.0.1:8000/service/api/v2/count_repairs/
+    path('api/v2/change_details/', ChangeDetailsRepair.as_view()),  # http://127.0.0.1:8000/service/api/v2/change_details/
 ]

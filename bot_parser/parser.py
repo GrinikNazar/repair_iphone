@@ -11,6 +11,7 @@ def parser_fom_telegram(text):
         "time_work": 1,
         "warranty": False,
         "shop": 1,
+        "vendor": None,
     }
 
     asoc = {
@@ -22,6 +23,7 @@ def parser_fom_telegram(text):
         "Пошкодження": "defect",
         "Магазин": "shop",
         "Закінчення ремонту": "time_work",
+        "Постачальник": 'vendor',
     }
 
     text_split = text.split('\n')

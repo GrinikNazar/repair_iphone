@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import './RepairModal.css';
 import DetailsBlock from "../DetailsBlock/DetailsBlock";
 import moment from 'moment';
+import TextArea from "./TextArea";
 
 
 const RepairModal = function ({visible, setVisible, repair}) {
@@ -20,10 +21,10 @@ const RepairModal = function ({visible, setVisible, repair}) {
 
                 <div className="popUp__header header-popUp">
                     <div className="header-popUp__worrantyDate">
+                        <div className="header-popUp__number"><strong>Ремонт</strong>: №{repair.number}</div>
                         <div className="header-popUp__worranty">{repair.warranty ? 'Гарантійний' : ''}</div>
-                        <div className="header-popUp__date"><strong>Проданий</strong>: 21.03.2021</div>
                     </div>
-                    <div className="header-popUp__number"><strong>Ремонт</strong>: №{repair.number}</div>
+                    <div className="header-popUp__date"><strong>Проданий</strong>: 21.03.2021</div>
                     <div>
                         <div className="header-popUp__shop"><strong>Магазин</strong>: {repair.shop}</div>
                         <div className="header-popUp__date-create"><strong>Прийнятий</strong>: {moment(repair.time_create.time_work).format('D.MM.YYYY')}</div>
@@ -32,15 +33,17 @@ const RepairModal = function ({visible, setVisible, repair}) {
                 <div className="popUp__body body-popUp">
 
                     <div>
-                        <DetailsBlock mutable={true} detail={repair.imei}>IMEI</DetailsBlock>
+                        <DetailsBlock mutable={true} detail={repair.imei} nameId={'imei'} repairId={repair.id}>IMEI</DetailsBlock>
                         <DetailsBlock mutable={false} detail={repair.model}>Модель</DetailsBlock>
-                        <DetailsBlock mutable={true} detail={repair.password}>Пароль</DetailsBlock>
+                        <DetailsBlock mutable={true} detail={repair.password} nameId={'password'} repairId={repair.id}>Пароль</DetailsBlock>
                     </div>
                     <div>
-                        <DetailsBlock mutable={false}>Клієнт</DetailsBlock>
-                        <DetailsBlock mutable={false}>Постачальник</DetailsBlock>
+                        <DetailsBlock mutable={false} detail={repair.customer_name}>Клієнт</DetailsBlock>
+                        <DetailsBlock mutable={false} detail={repair.vendor}>Постачальник</DetailsBlock>
                         <DetailsBlock 
                             mutable={true}
+                            nameId={'time_create'}
+                            repairId={repair.id}
                             detail={`${moment(repair.time_create.time_create).format('HH:mm')} - ${moment(repair.time_create.time_work).format('HH:mm')}`}
                         >
                             Час завершення
@@ -53,16 +56,20 @@ const RepairModal = function ({visible, setVisible, repair}) {
                     </div>
 
                 </div>
+
                 <div className="popUp__malfunction malfunction-popUp">
                     <div className="malfunction-popUp__title">Несправність</div>
                     <div className="malfunction-popUp__text">{repair.defect}</div>
                 </div>
+
                 <div className="popUp__notes notes-popUp">
                     <div className="notes-popUp__title">Відписати за ремонт</div>
-                    <input
-                        className="notes-popUp__text"
-                        onChange={ (e) => setAnswerInput(e.target.value)}
+
+                    <TextArea
+                        value={answerInput}
+                        setValue={setAnswerInput}
                     />
+
                 </div>
                 <div className="popUp__actions action-popUp">
                     <a href="#" className="action-popUp__close">Закрити ремонт</a>

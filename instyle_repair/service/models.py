@@ -18,6 +18,7 @@ class Repair(models.Model):
     number = models.CharField(max_length=20)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=NEW)
     model = models.CharField(max_length=255)
+    vendor = models.CharField(max_length=255, blank=True)
     customer_phone = models.CharField(max_length=255)
     customer_name = models.CharField(max_length=255)
     password = models.CharField(max_length=255)

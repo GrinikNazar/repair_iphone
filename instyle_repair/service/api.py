@@ -150,3 +150,20 @@ class CountRepairs(APIView):
             }
 
         return Response(json_out)
+
+
+class ChangeDetailsRepair(APIView):
+    def put(self, request):
+        repair_id = request.data['id']
+        name = request.data['name']
+        value = request.data['value']
+
+        repair = Repair.objects.get(pk=repair_id)
+
+        if name == 'password':
+            repair.password = value
+            repair.save()
+
+        return Response()
+
+
