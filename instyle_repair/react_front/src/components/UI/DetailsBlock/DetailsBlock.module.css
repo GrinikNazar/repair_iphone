@@ -10,7 +10,6 @@
     position: relative;
     display: inline-block;
     margin-bottom: 10px;
-
 }
 
 .detail h1 {
@@ -36,6 +35,31 @@
     padding-right: 20px;
     padding-top: 1px;
     font-weight: 500;
+    transition: all 0.3s ease-in-out;
+}
+
+.detailinput__green {
+    font-family: 'Roboto';
+    box-sizing: border-box;
+    width: 170px;
+    height: 24px;
+    background: #5ad38a;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    margin-left: 4px;
+    position: relative;
+    padding-left: 10px;
+    padding-right: 20px;
+    padding-top: 1px;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+    transform: scale(0.97);
+    box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.25);
+    color: #ffffff;
+}
+
+.detailinput__green::placeholder {
+    color: #000000;
 }
 
 .detailinput::placeholder {
@@ -66,10 +90,13 @@
     padding-top: 2px;
     padding-left: 10px;
     text-align: left;
-    cursor: pointer;
     display: inline-block;
     overflow: hidden;
 }
+
+/* .detail_input_block:hover {
+    transform: scale(1.02);
+} */
 
 .refresh {
     position: absolute;

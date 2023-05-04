@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import cl from "./DetailsBlock.module.css"
 import DetailsRepair from "../../../API/ChangeDetailsRepair";
 
@@ -6,11 +6,22 @@ import DetailsRepair from "../../../API/ChangeDetailsRepair";
 const DetailsBlock = function ({children, mutable, detail, nameId, repairId}) {
 
     const [itemValue, setItemValue] = useState(detail)
+    const [applyStyle, setApplyStyle] = useState(false)
+
+    useEffect( () => {
+        if (applyStyle) {
+            setTimeout( () => {
+                setApplyStyle(false)
+            }, 1000)
+        }
+    }, [applyStyle])
 
     async function changeItem() {
        const response = await DetailsRepair.detailsRepair(nameId, repairId, itemValue)
 
-       console.log(response.status)
+       if (response.status === 200) {
+            setApplyStyle(true) 
+       }
     }
 
     return (
@@ -20,7 +31,7 @@ const DetailsBlock = function ({children, mutable, detail, nameId, repairId}) {
             ? 
                 <div>
                     <input 
-                        className={cl.detailinput} 
+                        className={applyStyle ? cl.detailinput__green : cl.detailinput } 
                         placeholder={itemValue}
                         onChange={ (e) => setItemValue(e.target.value)}
                     />
