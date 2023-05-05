@@ -49,8 +49,6 @@ class RepairSerializer(serializers.ModelSerializer):
         }
 
     def get_imei(self, obj):
-        if len(obj.imei) > 5:
-            return obj.imei[-5:].lower()
         return obj.imei.lower()
 
 

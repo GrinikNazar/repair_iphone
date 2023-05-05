@@ -3,9 +3,9 @@ import cl from "./DetailsBlock.module.css"
 import DetailsRepair from "../../../API/ChangeDetailsRepair";
 
 
-const DetailsBlock = function ({children, mutable, detail, nameId, repairId}) {
+const DetailsBlock = function ({children, mutable, detail, nameId, repairId, setTmWork}) {
 
-    const [itemValue, setItemValue] = useState(detail)
+    const [itemValue, setItemValue] = useState('')
     const [applyStyle, setApplyStyle] = useState(false)
 
     useEffect( () => {
@@ -20,8 +20,16 @@ const DetailsBlock = function ({children, mutable, detail, nameId, repairId}) {
        const response = await DetailsRepair.detailsRepair(nameId, repairId, itemValue)
 
        if (response.status === 200) {
-            setApplyStyle(true) 
+            setTmWork(response.data)
        }
+
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        
+        setApplyStyle(true)
+        setItemValue('')
     }
 
     return (
@@ -30,16 +38,20 @@ const DetailsBlock = function ({children, mutable, detail, nameId, repairId}) {
             {mutable
             ? 
                 <div>
-                    <input 
-                        className={applyStyle ? cl.detailinput__green : cl.detailinput } 
-                        placeholder={itemValue}
-                        onChange={ (e) => setItemValue(e.target.value)}
-                    />
-                    <div 
-                        className={cl.refresh}
-                        onClick={changeItem}
-                    >
-                    </div>
+                    <form onSubmit={handleSubmit}>
+                        <input 
+                            className={applyStyle ? cl.detailinput__green : cl.detailinput } 
+                            placeholder={detail}
+                            value={itemValue}
+                            onChange={ (e) => setItemValue(e.target.value)}
+                        />
+                        <button 
+                            type="submit"
+                            className={cl.refresh}
+                            onClick={changeItem}
+                        >
+                        </button>
+                    </form>
                 </div> 
                 :
                 <div className={cl.detail_input_block}>

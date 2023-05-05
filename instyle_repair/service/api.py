@@ -1,3 +1,4 @@
+import datetime
 from itertools import chain
 
 from django.utils.datastructures import MultiValueDictKeyError
@@ -164,6 +165,20 @@ class ChangeDetailsRepair(APIView):
             repair.password = value
             repair.save()
 
-        return Response()
+            return Response()
+
+        elif name == 'imei':
+            repair.imei = value
+            repair.save()
+
+            return Response()
+
+        elif name == 'time_create':
+            # repair.time_create = datetime.datetime.now()
+            repair.time_work += int(value)
+            repair.save()
+
+            return Response(int(value))
+
 
 

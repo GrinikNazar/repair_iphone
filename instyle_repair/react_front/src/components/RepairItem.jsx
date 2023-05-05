@@ -8,6 +8,11 @@ const RepairItem = function ({repair, applyRepair}) {
 
     const [modalRepair, setModalRepair] = useState(false)
     const [progressBar, setProgressBar] = useState(0)
+    const [tmWork, setTmWork] = useState(0)
+
+    const changeTmWork = (value) => {
+        setTmWork(tmWork + value)
+    }
 
     const changeProgressBar = (progress) => {
         setProgressBar(progress)
@@ -29,9 +34,12 @@ const RepairItem = function ({repair, applyRepair}) {
             }`}
         >
             
-        <RepairModal visible={modalRepair} setVisible={setModalRepair} repair={repair}>
-
-        </RepairModal>
+        <RepairModal 
+            visible={modalRepair} 
+            setVisible={setModalRepair} 
+            repair={repair}
+            setTmWork={changeTmWork}
+        />
 
             <div className="item-main-content__body   body-item ">
                 
@@ -50,7 +58,7 @@ const RepairItem = function ({repair, applyRepair}) {
                 </div>
 
                 <div className={`body-item__parameters parameters-item ${repair.warranty ? "worranty" : ""}`}>
-                    <div className="parameters-item__model-parameter">{repair.model}({repair.imei})</div>
+                    <div className="parameters-item__model-parameter">{repair.model}({repair.imei.slice(-5)})</div>
                     <div className={`parameters-item__malfunction-parameter ${repair.warranty ? "warranty" : ""}`}>{repair.defect}</div>
                     <div className="parameters-item__passAndTimes passAndTimes">
                     <div className="passAndTimes__password">{repair.password}</div>
@@ -106,6 +114,7 @@ const RepairItem = function ({repair, applyRepair}) {
                         timeWork={repair.time_work} 
                         master={repair.master}
                         changeProgressBar={changeProgressBar}
+                        tmWork={tmWork}
                     />
                 </div>
             )}
