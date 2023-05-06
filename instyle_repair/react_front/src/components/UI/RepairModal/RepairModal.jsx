@@ -5,7 +5,7 @@ import moment from 'moment';
 import TextArea from "./TextArea";
 
 
-const RepairModal = function ({visible, setVisible, repair, setTmWork}) {
+const RepairModal = function ({visible, setVisible, repair}) {
 
     const [answerInput, setAnswerInput] = useState('')
     
@@ -45,7 +45,6 @@ const RepairModal = function ({visible, setVisible, repair, setTmWork}) {
                             nameId={'time_create'}
                             repairId={repair.id}
                             detail={`${moment(repair.time_create.time_create).format('HH:mm')} - ${moment(repair.time_create.time_work).format('HH:mm')}`}
-                            setTmWork={setTmWork}
                         >
                             Час завершення
                         </DetailsBlock>

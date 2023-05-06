@@ -2,19 +2,18 @@ import React, { useState, useEffect, useMemo } from 'react';
 import moment from 'moment';
 import "../styles/ProgressBar.css"
 
-const ProgressBarV2 = ({timeCreate, timeWork, master, changeProgressBar, tmWork}) => {
+const ProgressBarV2 = ({timeCreate, timeWork, master, changeProgressBar}) => {
   const [startTime, setStartTime] = useState(moment(timeCreate)); // початкова точка в часі
   const [currentTime, setCurrentTime] = useState(moment()); // поточний час
   const [progress, setProgress] = useState(); // стан прогресу
 
   const prBarrMemo = useMemo(() => {
-    const timeEnd = moment(timeCreate).add(timeWork + tmWork, 'hours')
+    const timeEnd = moment(timeCreate).add(timeWork, 'minutes')
     const totalDuration = moment.duration(timeEnd.diff(startTime)); // обчислюємо загальну тривалість в мілісекундах
     const elapsedDuration = moment.duration(currentTime.diff(startTime)); // обчислюємо пройдений час в мілісекундах
     const currentProgress = (elapsedDuration.asSeconds() / totalDuration.asSeconds()) * 100; // обчислюємо прогрес від 0 до 100
     return currentProgress
-  }, [tmWork, currentTime, startTime])
-
+  }, [currentTime, startTime])
 
   useEffect(() => {
     const interval = setInterval(() => { 
@@ -24,19 +23,15 @@ const ProgressBarV2 = ({timeCreate, timeWork, master, changeProgressBar, tmWork}
   }, []);
 
   useEffect(() => {
-    if (progress >= 100) {
+    setProgress(prBarrMemo);
+    changeProgressBar(prBarrMemo)
+
+    if (prBarrMemo >= 100) {
       setProgress(100)
       changeProgressBar(100)
-      return 
     }
 
-    if (progress >= 50) {
-      changeProgressBar(50)
-    }
-
-    setProgress(prBarrMemo);
-
-  }, [currentTime, tmWork]);
+  }, [currentTime]);
 
 
   return (

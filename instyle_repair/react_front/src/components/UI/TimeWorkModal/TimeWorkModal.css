@@ -1,0 +1,42 @@
+.TimeWorkModal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: none;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 50;
+}
+.TimeWorkModalContent {
+    padding: 25px;
+    background: white;
+    border-radius: 16px;
+    min-width: 250px;
+}
+.TimeWorkModal.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.TimeWork__window {
+    font-family: 'Roboto';
+    width: 300px;
+    max-height: 130px;
+    padding: 30px 40px;
+    box-shadow: 5px 10px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    color: #000;
+    background: #fff;
+    display: flex;
+    /* flex-direction: column; */
+    position: fixed;
+    top: 20%;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: 55px auto auto auto;
+    z-index: 51;
+    overflow: auto;
+    }

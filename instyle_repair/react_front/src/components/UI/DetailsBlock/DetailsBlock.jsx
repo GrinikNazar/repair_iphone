@@ -3,7 +3,7 @@ import cl from "./DetailsBlock.module.css"
 import DetailsRepair from "../../../API/ChangeDetailsRepair";
 
 
-const DetailsBlock = function ({children, mutable, detail, nameId, repairId, setTmWork}) {
+const DetailsBlock = function ({children, mutable, detail, nameId, repairId}) {
 
     const [itemValue, setItemValue] = useState('')
     const [applyStyle, setApplyStyle] = useState(false)
@@ -17,12 +17,7 @@ const DetailsBlock = function ({children, mutable, detail, nameId, repairId, set
     }, [applyStyle])
 
     async function changeItem() {
-       const response = await DetailsRepair.detailsRepair(nameId, repairId, itemValue)
-
-       if (response.status === 200) {
-            setTmWork(response.data)
-       }
-
+       await DetailsRepair.detailsRepair(nameId, repairId, itemValue)
     }
 
     const handleSubmit = (event) => {

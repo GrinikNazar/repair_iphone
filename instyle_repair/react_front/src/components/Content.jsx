@@ -1,6 +1,6 @@
 import RepairItem from "./RepairItem";
 import Repairs from "../API/Repairs";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
+// import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 const Content = function ({currentUser, repairs, setRepairs, getRepairs, getMastersAndShopsApi}) {
 
@@ -31,19 +31,19 @@ const Content = function ({currentUser, repairs, setRepairs, getRepairs, getMast
         
         <div className="page__main main-content">
 
-            {/* <div className="main-content__items"> */}
-            <TransitionGroup className="main-content__items">
+            <div className="main-content__items">
+            {/* <TransitionGroup className="main-content__items"> */}
                 {repairs.map( (repair) =>
-                    <CSSTransition
-                        key={repair.id}
-                        timeout={400}
-                        classNames="repairphone"
-                    >
-                        <RepairItem repair={repair} applyRepair={applyRepair}/>
-                    </CSSTransition>
+                    // <CSSTransition
+                    //     key={repair.id}
+                    //     timeout={400}
+                    //     classNames="repairphone"
+                    // >
+                        <RepairItem key={repair.id} repair={repair} applyRepair={applyRepair}/>
+                    // </CSSTransition>
                 )}
-            </TransitionGroup>
-            {/* </div> */}
+            {/* </TransitionGroup> */}
+            </div>
         </div>
 
     )

@@ -1,23 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProgressBarV2 from "./ProgressBarV2";
 import moment from 'moment';
 import RepairModal from "./UI/RepairModal/RepairModal";
+import TimeWorkModal from "./UI/TimeWorkModal/TimeWorkModal";
 
 
 const RepairItem = function ({repair, applyRepair}) {
 
     const [modalRepair, setModalRepair] = useState(false)
     const [progressBar, setProgressBar] = useState(0)
-    const [tmWork, setTmWork] = useState(0)
-
-    const changeTmWork = (value) => {
-        setTmWork(tmWork + value)
-    }
-
-    const changeProgressBar = (progress) => {
-        setProgressBar(progress)
-    }
-
+    const [modalTimeChange, setModalTimeChange] = useState(false)
 
     return (
         
@@ -25,7 +17,7 @@ const RepairItem = function ({repair, applyRepair}) {
             className={`main-content__item item-main-content ${
                 repair.status === "closed" 
                     ? "item-gray" 
-                    : progressBar === 100 
+                    : progressBar >= 100 
                         ? "item-red"
                         : progressBar < 50
                             ? "item-green"
@@ -33,12 +25,16 @@ const RepairItem = function ({repair, applyRepair}) {
             }
             }`}
         >
-            
+
+        <TimeWorkModal
+            visible={modalTimeChange} 
+            setVisible={setModalTimeChange} 
+        />
+
         <RepairModal 
             visible={modalRepair} 
             setVisible={setModalRepair} 
             repair={repair}
-            setTmWork={changeTmWork}
         />
 
             <div className="item-main-content__body   body-item ">
@@ -107,14 +103,14 @@ const RepairItem = function ({repair, applyRepair}) {
                 <div className="item-main-content__statusbar">
                     <span style={{width: "100%", background: "grey"}}></span>
                 </div>
-            ): (
-                <div className="progress-bar-line">
+            ): (   
+                <div onClick={() => setModalTimeChange(true)} className="progress-bar-line">
+                    
                     <ProgressBarV2 
                         timeCreate={repair.time_create.time_create} 
                         timeWork={repair.time_work} 
                         master={repair.master}
-                        changeProgressBar={changeProgressBar}
-                        tmWork={tmWork}
+                        changeProgressBar={setProgressBar}
                     />
                 </div>
             )}

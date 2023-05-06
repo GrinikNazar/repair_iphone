@@ -23,6 +23,11 @@ const MyRepairs = function ({repairs, setRepairs, searchedRepair, mastersAndShop
     useEffect( () => {
         setHeaderLinks('/my')
         getRepairs()
+
+        const interval = setInterval(() => {
+            getRepairs()
+          }, 5000);
+          return () => clearInterval(interval)
     
     }, [activeMasters, activeShops, sidebarResult])
 

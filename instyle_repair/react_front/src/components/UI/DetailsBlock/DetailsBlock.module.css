@@ -94,10 +94,6 @@
     overflow: hidden;
 }
 
-/* .detail_input_block:hover {
-    transform: scale(1.02);
-} */
-
 .refresh {
     position: absolute;
     width: 15px;
