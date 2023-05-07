@@ -22,17 +22,15 @@
 
 .TimeWork__window {
     font-family: 'Roboto';
-    width: 300px;
+    width: 200px;
     max-height: 130px;
-    padding: 30px 40px;
+    padding: 20px 30px;
     box-shadow: 5px 10px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     color: #000;
     background: #fff;
-    display: flex;
-    /* flex-direction: column; */
-    position: fixed;
-    top: 20%;
+    position: relative;
+    top: 30%;
     left: 0;
     bottom: 0;
     right: 0;
@@ -40,3 +38,97 @@
     z-index: 51;
     overflow: auto;
     }
+
+.TimeWork__header {
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: space-between;
+}
+
+.TimeWork__header h1 {
+    font-size: 16px;
+}
+
+.TimeWork__formblock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.TimeWork__formblock form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+}
+
+.TimeWork__formblock-input {
+    width: 100%;
+    display: block;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    height: 24px;
+    background: #F2F2F2;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    margin-left: 4px;
+    position: relative;
+    padding-left: 10px;
+    padding-right: 20px;
+    padding-top: 1px;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+}
+
+.TimeWork__input-green {
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    height: 24px;
+    background: #5ad38a;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    margin-left: 4px;
+    position: relative;
+    padding-left: 10px;
+    padding-right: 20px;
+    padding-top: 1px;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+    transform: scale(0.97);
+    box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.25);
+}
+
+.TimeWork__input-green::placeholder {
+    color: #000000;
+}
+
+.TimeWork__formblock::placeholder {
+    font-weight: 500;
+    color: #1b1b1b;
+    font-size: 13px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 111.52%;
+}
+
+.TimeWork__formblock button {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 7px;
+    font-size: 16px;
+    width: 100%;
+    height: 26px;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    background: #435AAB;
+}
+
+.TimeWork__formblock button:hover {
+    transition: transform 0.3s ease 0s;
+    transform: scale(0.96);
+}

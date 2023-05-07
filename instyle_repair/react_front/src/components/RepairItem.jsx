@@ -28,7 +28,10 @@ const RepairItem = function ({repair, applyRepair}) {
 
         <TimeWorkModal
             visible={modalTimeChange} 
-            setVisible={setModalTimeChange} 
+            setVisible={setModalTimeChange}
+            repair={repair}
+            detail={`${moment(repair.time_create.time_create).format('HH:mm')} - ${moment(repair.time_create.time_work).format('HH:mm')}`}
+            nameId={'time_create'}
         />
 
         <RepairModal 
