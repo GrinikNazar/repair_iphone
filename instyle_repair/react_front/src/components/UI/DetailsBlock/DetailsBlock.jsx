@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import cl from "./DetailsBlock.module.css"
 import DetailsRepair from "../../../API/ChangeDetailsRepair";
+import moment from 'moment';
 
 
 const DetailsBlock = function ({children, mutable, detail, nameId, repairId}) {
@@ -17,7 +18,7 @@ const DetailsBlock = function ({children, mutable, detail, nameId, repairId}) {
     }, [applyStyle])
 
     async function changeItem() {
-       await DetailsRepair.detailsRepair(nameId, repairId, itemValue)
+       await DetailsRepair.detailsRepair(nameId, repairId, itemValue, moment())
     }
 
     const handleSubmit = (event) => {

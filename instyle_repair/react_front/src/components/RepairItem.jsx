@@ -10,6 +10,15 @@ const RepairItem = function ({repair, applyRepair}) {
     const [modalRepair, setModalRepair] = useState(false)
     const [progressBar, setProgressBar] = useState(0)
     const [modalTimeChange, setModalTimeChange] = useState(false)
+    const [endTimeWork, setEndTimeWork] = useState()
+
+    function testCase() {
+        return moment(repair.time_create.time_work).calendar() > moment(repair.time_create.time_create).calendar()
+    }
+
+    useEffect(() => {
+        console.log(testCase())
+    }, [])
 
     return (
         
@@ -70,9 +79,9 @@ const RepairItem = function ({repair, applyRepair}) {
                     ): (
                         <div className="passAndTimes__times">
                             <div className="passAndTimes__label">Час: </div>
-                            <div className="passAndTimes__starttime">{moment(repair.time_create.time_create).format('H:mm')}</div>
+                            <div className="passAndTimes__starttime">{moment(repair.time_create.time_create).format('HH:mm')}</div>
                             <div className="passAndTimes__label2"> до</div>
-                            <div className="passAndTimes__endtime">{moment(repair.time_create.time_work).format('H:mm')}</div>
+                            <div className="passAndTimes__endtime">{moment(repair.time_create.time_work).format('HH:mm')}</div>
                         </div>
                     )}
                     </div>
@@ -110,11 +119,12 @@ const RepairItem = function ({repair, applyRepair}) {
                 <div onClick={() => setModalTimeChange(true)} className="progress-bar-line">
                     
                     <ProgressBarV2 
-                        timeCreate={repair.time_create.time_create} 
+                        timeCreate={repair.time_change} 
                         timeWork={repair.time_work} 
                         master={repair.master}
                         changeProgressBar={setProgressBar}
                     />
+
                 </div>
             )}
 

@@ -16,8 +16,12 @@ const RepairModal = function ({visible, setVisible, repair}) {
     }
 
     return (
-        <div className={rootClasses.join(' ')} onClick={() => setVisible(false)}>
+        <div className={rootClasses.join(' ')}>
             <div className="popUp__window" onClick={(e) => e.stopPropagation()}>
+
+                <div className="close-window" onClick={() => setVisible(false)}>
+                
+                </div>
 
                 <div className="popUp__header header-popUp">
                     <div className="header-popUp__worrantyDate">

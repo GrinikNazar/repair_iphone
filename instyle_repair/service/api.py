@@ -158,6 +158,7 @@ class ChangeDetailsRepair(APIView):
         repair_id = request.data['id']
         name = request.data['name']
         value = request.data['value']
+        moment = request.data['moment']
 
         repair = Repair.objects.get(pk=repair_id)
 
@@ -174,7 +175,8 @@ class ChangeDetailsRepair(APIView):
             return Response()
 
         elif name == 'time_create':
-            repair.time_work += int(value)
+            repair.time_change = moment
+            repair.time_work = int(value)
             repair.save()
 
             return Response()

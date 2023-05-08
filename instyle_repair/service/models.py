@@ -25,6 +25,7 @@ class Repair(models.Model):
     imei = models.CharField(max_length=15)
     defect = models.TextField(blank=True)
     time_create = models.DateTimeField(auto_now_add=True)
+    time_change = models.DateTimeField(auto_now_add=True)
     time_work = models.IntegerField(default=1)
     time_end = models.DateTimeField(auto_now=True, auto_now_add=False)
     warranty = models.BooleanField(default=False)

@@ -24,6 +24,7 @@ class RepairSerializer(serializers.ModelSerializer):
             'master',
             'shop',
             'time_create',
+            'time_change',
             'time_work',
             'time_end',
             'vendor',
@@ -45,7 +46,7 @@ class RepairSerializer(serializers.ModelSerializer):
     def get_time_create(self, obj):
         return {
             'time_create': obj.time_create,
-            'time_work': obj.time_create + timedelta(hours=obj.time_work)
+            'time_work': obj.time_change + timedelta(hours=obj.time_work)
         }
 
     def get_imei(self, obj):

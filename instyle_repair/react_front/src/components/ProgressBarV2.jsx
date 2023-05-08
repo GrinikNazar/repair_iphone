@@ -3,21 +3,20 @@ import moment from 'moment';
 import "../styles/ProgressBar.css"
 
 const ProgressBarV2 = ({timeCreate, timeWork, master, changeProgressBar}) => {
-  const [startTime, setStartTime] = useState(moment(timeCreate)); // початкова точка в часі
-  const [currentTime, setCurrentTime] = useState(moment()); // поточний час
-  const [progress, setProgress] = useState(); // стан прогресу
+  const [currentTime, setCurrentTime] = useState(moment());
+  const [progress, setProgress] = useState();
 
   const prBarrMemo = useMemo(() => {
-    const timeEnd = moment(timeCreate).add(timeWork, 'minutes')
-    const totalDuration = moment.duration(timeEnd.diff(startTime)); // обчислюємо загальну тривалість в мілісекундах
-    const elapsedDuration = moment.duration(currentTime.diff(startTime)); // обчислюємо пройдений час в мілісекундах
-    const currentProgress = (elapsedDuration.asSeconds() / totalDuration.asSeconds()) * 100; // обчислюємо прогрес від 0 до 100
+    const timeEnd = moment(timeCreate).add(timeWork, 'hour')
+    const totalDuration = moment.duration(timeEnd.diff(timeCreate)); 
+    const elapsedDuration = moment.duration(currentTime.diff(timeCreate)); 
+    const currentProgress = (elapsedDuration.asSeconds() / totalDuration.asSeconds()) * 100;
     return currentProgress
-  }, [currentTime, startTime])
+  }, [currentTime])
 
   useEffect(() => {
     const interval = setInterval(() => { 
-      setCurrentTime(moment()); // отримуємо поточний час кожну секунду
+      setCurrentTime(moment());
     }, 10);
     return () => clearInterval(interval);
   }, []);
