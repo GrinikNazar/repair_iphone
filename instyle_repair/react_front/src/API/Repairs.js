@@ -40,4 +40,13 @@ export default class Repairs {
         return response
     }
 
+    static async deleteMaster(repairId, masterId, status) {
+        const response = await axios.put('http://127.0.0.1:8000/service/api/v2/apply_master/', {
+            'repair_id': repairId,
+            'master_id': masterId,
+            'status': status
+        })
+        return response
+    }
+
 }

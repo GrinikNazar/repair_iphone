@@ -98,7 +98,7 @@ class ShopsAndMastersAPI(APIView):
         return Response(json_out)
 
 
-class AddMaster(APIView):
+class AddAndDeleteMaster(APIView):
     def post(self, request):
         repair_id = request.data['repair_id']
         user_id = request.data['master_id']
@@ -119,6 +119,19 @@ class AddMaster(APIView):
         serializer = RepairSerializer(repair)
 
         return Response(serializer.data)
+
+    def put(self, request):
+        repair_id = request.data['repair_id']
+        user_id = request.data['master_id']
+        repair_status = request.data['status']
+
+        repair = Repair.objects.get(pk=repair_id)
+
+        repair.master = None
+        repair.status = repair.NEW
+        repair.save()
+
+        return Response()
 
 
 class CountRepairs(APIView):

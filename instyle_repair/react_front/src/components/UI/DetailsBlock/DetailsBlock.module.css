@@ -94,6 +94,49 @@
     overflow: hidden;
 }
 
+.detail_input_block_select {
+    color: #1b1b1b;
+    font-size: 13px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    box-sizing: border-box;
+    width: 170px;
+    height: 24px;
+    background: #F2F2F2;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    margin-left: 4px;
+    position: relative;
+    text-align: left;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.detail_select {
+    color: #1b1b1b;
+    font-size: 13px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    box-sizing: border-box;
+    width: 142px;
+    height: 24px;
+    background: #F2F2F2;
+    border: none;
+    margin-left: 1px;
+    border-radius: 15px;
+    padding-left: 10px;
+    position: relative;
+    text-align: left;
+    display: inline-block;
+    overflow: hidden;
+    top: -1px;
+    left: -1px;
+    cursor: pointer;
+    outline: none;
+}
+
 .refresh {
     position: absolute;
     width: 15px;
@@ -106,5 +149,37 @@
 }
 .refresh:hover {
     transform: scale(1.1);
+    transition: all 0.3s ease 0s;
+}
+
+.master__delete {
+    position: absolute;
+    width: 15px;
+    height: 16px;
+    right: 8px;
+    bottom: 6px;
+    background: url("../../../img/main/Master_delete.svg");
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.master__delete:hover {
+    transform: scale(1.2);
+    transition: all 0.3s ease 0s;
+}
+
+.change__master {
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    right: 26px;
+    bottom: 8px;
+    background: url("../../../img/main/change_master.svg");
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.change__master:hover {
+    transform: scale(1.2);
     transition: all 0.3s ease 0s;
 }

@@ -55,7 +55,14 @@ const RepairModal = function ({visible, setVisible, repair}) {
                     </div>
                     <div>
                         <DetailsBlock mutable={false} detail={repair.status}>Статус</DetailsBlock>
-                        <DetailsBlock mutable={false} detail={`${repair.master ? repair.master.name : 'Не прийнятий'}`}>Майстер</DetailsBlock> 
+                        <DetailsBlock 
+                            mutable={false} 
+                            repairId={repair.id}
+                            detail={`${repair.master ? repair.master.name : 'Не прийнятий'}`} 
+                            master={repair.master ? {masterId: repair.master.id, status: repair.status} : false}
+                        >
+                            Майстер
+                        </DetailsBlock> 
                         <DetailsBlock mutable={false} detail={'Поки що нема'}>Менеджер</DetailsBlock>
                     </div>
 
