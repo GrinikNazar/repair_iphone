@@ -9,6 +9,7 @@ import jwt_decode from 'jwt-decode';
 import MasterApi from "./API/MastersAndShops";
 import Login from "./API/Login";
 import Statistic from "./pages/Statistic";
+import { MastersContext } from "./context";
 
 
 function App() {
@@ -76,6 +77,8 @@ function App() {
  
   return (
     <div>
+      <MastersContext.Provider value={{mastersAndShops}}>
+
       {isToken() ? (
         <div className="wrapper">
 
@@ -141,6 +144,8 @@ function App() {
           </div>
 
         )}
+      </MastersContext.Provider>
+
     </div>
     
  

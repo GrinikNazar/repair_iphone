@@ -1,26 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import cl from "./DetailsBlock.module.css"
 import DetailsRepair from "../../../API/ChangeDetailsRepair";
 import moment from 'moment';
 import Repairs from "../../../API/Repairs";
-import MasterApi from "../../../API/MastersAndShops";
+import { MastersContext } from "../../../context";
 
 
 const DetailsBlock = function ({children, mutable, detail, nameId, repairId, master}) {
 
     const [itemValue, setItemValue] = useState('')
     const [applyStyle, setApplyStyle] = useState(false)
-    const [selectValue, setSelectValue] = useState(detail)
-    const [masters, setMasters] = useState([])
 
-    async function getMasters() {
-        const response = await MasterApi.getAllMAndShops(master=null)
-        setMasters(response.data.masters)
+    const {mastersAndShops} = useContext(MastersContext)
+
+    async function setMasterIdAndGetMasters(event) {
+        await Repairs.deleteMaster(repairId, event.target.value, 'same')
     }
-
-    useEffect(() => {
-        getMasters()
-    }, [])
 
     useEffect( () => {
         if (applyStyle) {
@@ -74,13 +69,11 @@ const DetailsBlock = function ({children, mutable, detail, nameId, repairId, mas
                         <div>
                             <div className={cl.detail_input_block_select}>
 
-                                <select value={selectValue} className={cl.detail_select} onChange={(e) => setSelectValue(e.target.value)}>
-                                    <option hidden>{selectValue}</option>
-                                    {masters.map(master => 
-                                        <option key={master.id} value={master.name}>
-                                            {master.name}
-                                        </option>
-                                        )}
+                                <select className={cl.detail_select} onChange={(e) => setMasterIdAndGetMasters(e)}>
+                                    <option hidden>{detail}</option>
+                                    {mastersAndShops.masters.map(master => 
+                                        <option key={master.id} value={master.id} label={master.name}></option>
+                                    )}
                                 </select>
 
                             </div>

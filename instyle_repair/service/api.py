@@ -122,14 +122,19 @@ class AddAndDeleteMaster(APIView):
 
     def put(self, request):
         repair_id = request.data['repair_id']
-        user_id = request.data['master_id']
+        master_id = request.data['master_id']
         repair_status = request.data['status']
 
         repair = Repair.objects.get(pk=repair_id)
 
-        repair.master = None
-        repair.status = repair.NEW
-        repair.save()
+        if repair_status == 'same':
+            master = CustomUser.objects.get(pk=master_id)
+            repair.master = master
+            repair.save()
+        else:
+            repair.master = None
+            repair.status = repair.NEW
+            repair.save()
 
         return Response()
 

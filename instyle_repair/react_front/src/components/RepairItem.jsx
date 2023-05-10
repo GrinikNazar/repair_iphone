@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ProgressBarV2 from "./ProgressBarV2";
 import moment from 'moment';
 import RepairModal from "./UI/RepairModal/RepairModal";
@@ -10,15 +10,6 @@ const RepairItem = function ({repair, applyRepair}) {
     const [modalRepair, setModalRepair] = useState(false)
     const [progressBar, setProgressBar] = useState(0)
     const [modalTimeChange, setModalTimeChange] = useState(false)
-    const [endTimeWork, setEndTimeWork] = useState()
-
-    function testCase() {
-        return moment(repair.time_create.time_work).calendar() > moment(repair.time_create.time_create).calendar()
-    }
-
-    useEffect(() => {
-        console.log(testCase())
-    }, [])
 
     return (
         
