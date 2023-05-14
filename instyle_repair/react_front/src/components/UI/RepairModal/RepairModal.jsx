@@ -5,7 +5,7 @@ import moment from 'moment';
 import TextArea from "./TextArea";
 
 
-const RepairModal = function ({visible, setVisible, repair}) {
+const RepairModal = function ({visible, setVisible, repair, setModalCloseRepair}) {
 
     const [answerInput, setAnswerInput] = useState('')
     
@@ -83,7 +83,23 @@ const RepairModal = function ({visible, setVisible, repair}) {
 
                 </div>
                 <div className="popUp__actions action-popUp">
-                    <a href="#" className="action-popUp__close">Закрити ремонт</a>
+                    {repair.status === 'closed' 
+                    ? (
+                        <div
+                            className="action-popUp__done"
+                        >
+                            Закритий
+                        </div>
+                    ) 
+                    : (
+                        <div
+                            className="action-popUp__close"
+                            onClick={() => setModalCloseRepair(true)}
+                        >
+                            Закрити ремонт
+                        </div>
+                    )
+                    } 
                     <a href="#" className="action-popUp__history">Історія</a>
                     <a href="#" className="action-popUp__answer">Відповісти</a>
                 </div>

@@ -3,6 +3,7 @@ import ProgressBarV2 from "./ProgressBarV2";
 import moment from 'moment';
 import RepairModal from "./UI/RepairModal/RepairModal";
 import TimeWorkModal from "./UI/TimeWorkModal/TimeWorkModal";
+import CloseRepair from "./UI/CloseRepair/CloseRepair";
 
 
 const RepairItem = function ({repair, applyRepair}) {
@@ -10,6 +11,7 @@ const RepairItem = function ({repair, applyRepair}) {
     const [modalRepair, setModalRepair] = useState(false)
     const [progressBar, setProgressBar] = useState(0)
     const [modalTimeChange, setModalTimeChange] = useState(false)
+    const [modalCloseRepair, setModalCloseRepair] = useState(false)
 
     return (
         
@@ -26,6 +28,13 @@ const RepairItem = function ({repair, applyRepair}) {
             }`}
         >
 
+        <CloseRepair
+            visible={modalCloseRepair} 
+            setVisible={setModalCloseRepair}
+            repair={repair}
+            applyRepair={applyRepair}
+        />
+
         <TimeWorkModal
             visible={modalTimeChange} 
             setVisible={setModalTimeChange}
@@ -38,6 +47,9 @@ const RepairItem = function ({repair, applyRepair}) {
             visible={modalRepair} 
             setVisible={setModalRepair} 
             repair={repair}
+            applyRepair={applyRepair}
+            modalCloseRepair={modalCloseRepair}
+            setModalCloseRepair={setModalCloseRepair}
         />
 
             <div className="item-main-content__body   body-item ">
@@ -89,7 +101,8 @@ const RepairItem = function ({repair, applyRepair}) {
                         ): (
                             <div 
                                 className="actions-item__button button-close"
-                                onClick={() => applyRepair(repair.id, repair.status)}
+                                // onClick={() => applyRepair(repair.id, repair.status)}
+                                onClick={() => setModalCloseRepair(true)}
                             >
                                 Закрити
                             </div>

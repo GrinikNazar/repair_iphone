@@ -1,20 +1,18 @@
 import React, { useState, useEffect, useRef} from "react";
-import './TimeWorkModal.css'
-import moment from 'moment';
-import DetailsRepair from "../../../API/ChangeDetailsRepair";
+import './CloseRepair.css'
 
-const TimeWorkModal = function ({nameId, visible, setVisible, repair, detail}) {
+const CloseRepair = function ({visible, setVisible, repair, applyRepair}) {
 
     const inputRef = useRef(null)
 
-    const rootClasses = ['TimeWorkModal']
+    const rootClasses = ['CloseRepairModal']
 
     if (visible) {
-        rootClasses.push('active')
         inputRef.current.focus()
+        rootClasses.push('active')
     }
 
-    const [itemValue, setItemValue] = useState('')
+    const [itemValue, setItemValue] = useState(1500)
     const [applyStyle, setApplyStyle] = useState(false)
 
     useEffect( () => {
@@ -25,15 +23,12 @@ const TimeWorkModal = function ({nameId, visible, setVisible, repair, detail}) {
         }
     }, [applyStyle])
 
-    async function changeItem() {
-       await DetailsRepair.detailsRepair(nameId, repair.id, itemValue, moment())
-    }
 
     const handleSubmit = (event) => {
         event.preventDefault()
         
         setApplyStyle(true)
-        setItemValue('')
+        applyRepair(repair.id, repair.status)
 
         setTimeout( () => {
             setVisible(false)
@@ -43,29 +38,26 @@ const TimeWorkModal = function ({nameId, visible, setVisible, repair, detail}) {
     return (
         <div className={rootClasses.join(' ')} onClick={() => setVisible(false)}>
             
-            <div className="TimeWork__window" onClick={(e) => e.stopPropagation()}>
+            <div className="CloseRepair__window" onClick={(e) => e.stopPropagation()}>
 
 
-                <div className="TimeWork__header">
+                <div className="CloseRepair__header">
                     <h1>№{repair.number}</h1>
-                    <h1>{repair.time_work} год.</h1>
+                    <h1>{itemValue}грн.</h1>
                 </div>
 
-                <div className="TimeWork__formblock">
+                <div className="CloseRepair__formblock">
                     <form onSubmit={handleSubmit}>
                         <input
-                            type="text"
                             ref={inputRef}
-                            className={applyStyle ? 'TimeWork__input-green' : 'TimeWork__formblock-input'} 
-                            placeholder={detail}
+                            className={applyStyle ? 'CloseRepair__input-green' : 'CloseRepair__formblock-input'} 
                             value={itemValue}
                             onChange={ (e) => setItemValue(e.target.value)}
                         />
                         <button
                             type="submit"
-                            onClick={changeItem}
                         >
-                            Змінити час
+                            Закрити ремонт
                         </button>
                     </form>
 
@@ -78,5 +70,5 @@ const TimeWorkModal = function ({nameId, visible, setVisible, repair, detail}) {
     )
 }
 
-export default TimeWorkModal;
+export default CloseRepair;
 
