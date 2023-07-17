@@ -1,1 +1,0 @@
-cmd /k "cd E:\Django\InstyleRepair\instyle_repair\react_front && npm start"
