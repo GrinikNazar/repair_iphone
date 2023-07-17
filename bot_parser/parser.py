@@ -42,15 +42,16 @@ def parser_fom_telegram(text):
         except IndexError:
             pass
 
-    #  Переробити наступний код для роботи з базою даних
-    shops = {
-        "inStyle": 1,
-        "inStyle NEW": 2,
-        "Снятин": 3,
-        "inStyle Kovel": 4,
-    }
+    import psycopg2
+    conn = psycopg2.connect("dbname=instyle user=postgres password=root")
+    dict_cur = conn.cursor()
+    dict_cur.execute("SELECT * FROM service_shop")
+    rec = dict_cur.fetchall()
+    shops = dict(rec)
+    new_shops = {key: value for value, key in shops.items()}
 
-    data['shop'] = shops[data['shop']]
+    data['shop'] = new_shops[data['shop']]
+
     data['model'] = ''.join(data['model'].split('(')[0])
 
     try:

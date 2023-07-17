@@ -10,6 +10,18 @@ my_user_id = 375385945
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
+
+    import psycopg2
+    conn = psycopg2.connect("dbname=instyle user=postgres password=root")
+    dict_cur = conn.cursor()
+    dict_cur.execute("SELECT * FROM service_shop")
+    rec = dict_cur.fetchall()
+
+    shops = dict(rec)
+    new_shops = {key: value for value, key in shops.items()}
+
+    print(new_shops)
+
     bot.send_message(message.chat.id, 'Go')
 
 
