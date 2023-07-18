@@ -25,7 +25,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "relocate-windows": "react-scripts build && rmdir /s /q ..\\service\\build && move build ..\\service",
+    "relocate": "react-scripts build && rm -rf ../service/build && mv -f build ../service"
   },
   "eslintConfig": {
     "extends": [
