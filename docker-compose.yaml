@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+  reverse_proxy:
+    container_name: auth-nginx
+    build: ./nginx_config
+    volumes:
+      - ./nginx_config/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+    depends_on:
+      - instyle_repair
+      - react_front
+  instyle_repair:
+    tty: true
+    container_name: instyle_repair
+    build: ./instyle_repair
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./instyle_repair:/code
+#    ports:
+#      - 8000:8000
+    expose:
+      - 8000
+  react_front:
+    tty: true
+    container_name: react_front
+    build: ./react_front
+    command: npm start
+#    ports:
+#      - 3000:3000
+    expose:
+      - 3000
+    image: no-react
+    volumes:
+      - ./react_front:/code
