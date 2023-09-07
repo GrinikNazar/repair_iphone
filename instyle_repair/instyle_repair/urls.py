@@ -24,8 +24,6 @@ from service.views import index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index),
-    re_path(r"^$", index),
     path('service/', include('service.api_urls')),
     path('api/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),

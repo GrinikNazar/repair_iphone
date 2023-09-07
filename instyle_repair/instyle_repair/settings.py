@@ -52,7 +52,7 @@ ROOT_URLCONF = 'instyle_repair.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "service/build")],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -92,6 +92,7 @@ USE_I18N = True
 
 USE_TZ = True
 
+CSRF_TRUSTED_ORIGINS = ['http://5.45.87.133']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
