@@ -42,8 +42,8 @@ def parser_fom_telegram(text):
         except IndexError:
             pass
 
-    import psycopg2
-    conn = psycopg2.connect(
+    import psycopg2-binary
+    conn = psycopg2-binary.connect(
         "dbname=instyle user=frostray password=6a6dad34"
     )
     dict_cur = conn.cursor()
