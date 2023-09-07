@@ -43,7 +43,9 @@ def parser_fom_telegram(text):
             pass
 
     import psycopg2
-    conn = psycopg2.connect("dbname=instyle user=postgres password=root")
+    conn = psycopg2.connect(
+        "dbname=instyle user=frostray password=6a6dad34"
+    )
     dict_cur = conn.cursor()
     dict_cur.execute("SELECT * FROM service_shop")
     rec = dict_cur.fetchall()

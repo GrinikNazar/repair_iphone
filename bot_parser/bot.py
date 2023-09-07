@@ -4,7 +4,7 @@ from parser import parser_fom_telegram
 
 bot = telebot.TeleBot('6076395112:AAEdPr_UP2lHMNfXHwSclPqNFPnaR1iIkSs')
 
-url = 'http://127.0.0.1:8000/service/api/v1/addrep/'
+url = 'http://5.45.87.133:8000/service/api/v1/addrep/'
 my_user_id = 375385945
 
 
@@ -49,8 +49,4 @@ def post_request(message):
 
 
 if __name__ == '__main__':
-    while True:
-        try:
-            bot.infinity_polling(timeout=10)
-        except BaseException:
-            continue
+    bot.infinity_polling(timeout=10)
