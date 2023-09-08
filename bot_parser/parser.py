@@ -44,7 +44,11 @@ def parser_fom_telegram(text):
 
     import psycopg2
     conn = psycopg2.connect(
-        "dbname=instyle user=frostray password=6a6dad34"
+        dbname="instyle",
+        user="frostray",
+        password="6a6dad34",
+        host="127.0.0.1",
+        port="5432",
     )
     dict_cur = conn.cursor()
     dict_cur.execute("SELECT * FROM service_shop")
