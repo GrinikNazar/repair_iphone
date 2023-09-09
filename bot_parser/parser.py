@@ -65,7 +65,11 @@ def parser_fom_telegram(text):
         for i in list(data['time_work']):
             if i.isdigit():
                 x.append(i)
-        data['time_work'] = max(x)
+        try:
+            data['time_work'] = max(x)
+        except ValueError:
+            data['time_work'] = 1
+
     except TypeError:
         pass
 
