@@ -3,9 +3,9 @@ import requests
 from parser import parser_fom_telegram
 
 try:
-    from .local_config import *
+    from local_config import *
 except ImportError:
-    from .prod_config import *
+    from prod_config import *
 
 bot = telebot.TeleBot(token)
 
