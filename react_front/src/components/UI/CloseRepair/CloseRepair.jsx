@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef} from "react";
 import './CloseRepair.css'
+import SendMessageBot from '../../../API/BotMessage';
 
 const CloseRepair = function ({visible, setVisible, repair, applyRepair}) {
 
@@ -12,7 +13,7 @@ const CloseRepair = function ({visible, setVisible, repair, applyRepair}) {
         rootClasses.push('active')
     }
 
-    const [itemValue, setItemValue] = useState(1500)
+    const [itemValue, setItemValue] = useState(0)
     const [applyStyle, setApplyStyle] = useState(false)
 
     useEffect( () => {
@@ -23,12 +24,20 @@ const CloseRepair = function ({visible, setVisible, repair, applyRepair}) {
         }
     }, [applyStyle])
 
+    async function SendMessageToBot(number, price) {
+        const response = await SendMessageBot.sendMessage(number, price)
+        return response.data.status
+    }
+
 
     const handleSubmit = (event) => {
         event.preventDefault()
         
+        const response = SendMessageToBot(repair.number, itemValue)
+        // дописати умову
         setApplyStyle(true)
         applyRepair(repair.id, repair.status)
+
 
         setTimeout( () => {
             setVisible(false)
