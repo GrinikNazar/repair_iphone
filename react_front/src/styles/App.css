@@ -722,6 +722,8 @@ body {
   gap: 2px;
   flex: 0 1 6.531532%; /* 128/1110px */
   line-height: 111%;
+  white-space: nowrap;
+  min-width: 100px;
 }
 .body-item__titles {
   margin-left: 20px;

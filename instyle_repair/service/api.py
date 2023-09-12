@@ -104,7 +104,10 @@ class AddAndDeleteMaster(APIView):
         user_id = request.data['master_id']
         repair_status = request.data['status']
 
-        repair = Repair.objects.get(pk=repair_id)
+        if user_id == 'bot':
+            repair = Repair.objects.get(number=repair_id)
+        else:
+            repair = Repair.objects.get(pk=repair_id)
 
         if repair_status == repair.NEW:
             master = CustomUser.objects.get(pk=user_id)

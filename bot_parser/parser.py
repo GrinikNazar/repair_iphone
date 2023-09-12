@@ -39,6 +39,10 @@ def parser_fom_telegram(text):
             y = row.split(':')[1].strip()
             if x in asoc:
                 data[asoc[x]] = y
+
+            elif x == 'Менеджер' and y == 'Снятин':
+                data['shop'] = 'Снятин'
+
         except IndexError:
             pass
 
