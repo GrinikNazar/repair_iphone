@@ -30,7 +30,7 @@ class Repair(models.Model):
     time_end = models.DateTimeField(auto_now=True, auto_now_add=False)
     warranty = models.BooleanField(default=False)
     master = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_DEFAULT, default=None, blank=True, null=True)  # Один ремонт один майстер
-    shop = models.ForeignKey('Shop', on_delete=models.PROTECT)  # Магазин - один ремонт до магазину
+    shop = models.ForeignKey('Shop', on_delete=models.PROTECT)
 
     def __str__(self):
         return self.number
@@ -38,6 +38,7 @@ class Repair(models.Model):
 
 class Shop(models.Model):
     name = models.CharField(max_length=255)
+    id_from_m = models.IntegerField(default=1)
     # Добавити менеджера
 
     def __str__(self):

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef} from "react";
 import './CloseRepair.css'
-import SendMessageBot from '../../../API/BotMessage';
+// import SendMessageBot from '../../../API/BotMessage';
 
 const CloseRepair = function ({visible, setVisible, repair, applyRepair}) {
 
@@ -24,16 +24,20 @@ const CloseRepair = function ({visible, setVisible, repair, applyRepair}) {
         }
     }, [applyStyle])
 
-    async function SendMessageToBot(number, price) {
-        const response = await SendMessageBot.sendMessage(number, price)
-        return response.data.status
-    }
+
+    //TODO: переписати на функцію яка буде відправляти в бек енд Мішки
+    // async function SendMessageToBot(number, price) {
+    //     const response = await SendMessageBot.sendMessage(number, price)
+    //     return response.data.status
+    // }
 
 
     const handleSubmit = (event) => {
         event.preventDefault()
         
-        const response = SendMessageToBot(repair.number, itemValue)
+        // з todo 
+        // const response = SendMessageToBot(repair.number, itemValue)
+
         // дописати умову
         setApplyStyle(true)
         applyRepair(repair.id, repair.status)
