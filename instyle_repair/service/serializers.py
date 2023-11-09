@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Repair, Shop
+from django.core.exceptions import ObjectDoesNotExist
 
 from datetime import timedelta
 
@@ -60,7 +61,7 @@ class RepairSerializerForBot(serializers.ModelSerializer):
     device_name = serializers.CharField(source='model')
     device_code = serializers.CharField(source='password')
     device_damage = serializers.CharField(source='defect')
-    store_id = serializers.IntegerField(source='shop_id')
+    store_id = serializers.IntegerField(source='shop_id', allow_null=True)
     date_end = serializers.CharField(source='time_work')
     shipper_name = serializers.CharField(source='vendor', allow_null=True)
     client_phone = serializers.CharField(source='customer_phone')
@@ -89,20 +90,28 @@ class RepairSerializerForBot(serializers.ModelSerializer):
         model = validated_data.get('model')
         shop = validated_data.get('shop_id')
 
-        shop = Shop.objects.get(id_from_m=shop)
-        shop = shop.pk
+        # вибірка магазину по ід з Мішки бекенду
+        try:
+            shop = Shop.objects.get(id_from_m=shop)
+            shop = shop.pk
+        except ObjectDoesNotExist:
+            # Для Снятина
+            shop = Shop.objects.get(id_from_m=100)
+            shop = shop.pk
 
         warranty = True if warranty else False
 
+        # постачальник
         if not vendor:
             vendor = ''
 
+        # видалити з назви моделі слово Apple і дужки з імеі
         sp_model = model.split()
         if sp_model[0] == 'Apple':
             model = ' '.join(sp_model[1:])
-
         model = ''.join(model.split('(')[0])
 
+        # Вибір часу з того який ввели менеджери ! 2-3 години вибирає більше!!!
         try:
             x = []
             for i in list(time_work):
