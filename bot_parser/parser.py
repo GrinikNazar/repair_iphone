@@ -49,8 +49,8 @@ def parser_fom_telegram(text):
     import psycopg2
     conn = psycopg2.connect(
         dbname="instyle",
-        user="frostray",
-        password="6a6dad34",
+        user="postgres",
+        password="root",
         host="127.0.0.1",
         port="5432",
     )
@@ -59,8 +59,9 @@ def parser_fom_telegram(text):
     rec = dict_cur.fetchall()
     shops = dict(rec)
     new_shops = {key: value for value, key in shops.items()}
+    #  new_shops = {'inStyle': 1, 'inStyle NEW': 2} -> по суті перевертає ключі та значення
 
-    data['shop'] = new_shops[data['shop']]
+    data['shop'] = new_shops[data['shop']]  # = new_shop['inStyle'] = 1
 
     data['model'] = ''.join(data['model'].split('(')[0])
 

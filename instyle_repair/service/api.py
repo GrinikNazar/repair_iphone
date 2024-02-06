@@ -142,6 +142,24 @@ class AddAndDeleteMaster(APIView):
         return Response()
 
 
+class CloseRepairItemFromBot(APIView):
+    def post(self, request):
+        repair_id = request.data['repair_id']
+        telegram_id = request.data['telegram_id']
+        price = request.data['repair_price']  # TODO: добавити в модель ціну і зробити щоб тут можна було закривати
+
+        repair = Repair.objects.get(number=repair_id)
+        try:
+            master = CustomUser.objects.get(telegram_id=telegram_id)
+        except Exception:
+            master = CustomUser.objects.get(username='Service')
+        repair.master = master
+        repair.status = repair.CLOSED
+        repair.save()
+
+        return Response()
+
+
 class CountRepairs(APIView):
     def get(self, request):
         all_repairs = Repair.objects.all()
