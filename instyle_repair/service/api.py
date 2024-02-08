@@ -18,19 +18,25 @@ class RepairViewSet(viewsets.ModelViewSet):
 class RepairView(APIView):
     def get(self, request):
         sidebar = request.GET['sidebar']
+        checkbox = request.GET['checked']
+        if checkbox == 'false':
+            repairs_all = Repair.objects.exclude(status='closed')
+        else:
+            repairs_all = Repair.objects.all()
+
         if sidebar == 'all':
-            repairs = Repair.objects.all().order_by('-warranty', '-time_create')
+            repairs = repairs_all.order_by('-warranty', '-time_create')
         elif sidebar == 'closed':
             repairs = Repair.objects.filter(status='closed').order_by('-warranty', '-time_end')
         elif sidebar == 'warranty':
             repairs = Repair.objects.filter(warranty=True).order_by('-time_create')
             repairs = repairs.exclude(status='closed')
         elif sidebar == 'new':
-            repairs = Repair.objects.filter(status='new').order_by('-warranty', '-time_create')
+            repairs = repairs_all.filter(status='new').order_by('-warranty', '-time_create')
         elif sidebar == 'inprogress':
             masters = CustomUser.objects.filter(groups__name='Майстри')
             masters = [int(master.id) for master in masters]
-            repairs = Repair.objects.filter(master__in=masters).exclude(status='closed').order_by('-warranty',
+            repairs = repairs_all.filter(master__in=masters).exclude(status='closed').order_by('-warranty',
                                                                                                   '-time_create')
 
         masters = request.GET['masters']

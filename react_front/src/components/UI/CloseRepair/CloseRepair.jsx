@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import './CloseRepair.css'
-// import SendMessageBot from '../../../API/BotMessage';
+import SendMessageBot from '../../../API/BotMessage';
 
-const CloseRepair = function ({visible, setVisible, repair, applyRepair}) {
+const CloseRepair = function ({ visible, setVisible, repair, applyRepair }) {
 
     const inputRef = useRef(null)
 
@@ -16,41 +16,39 @@ const CloseRepair = function ({visible, setVisible, repair, applyRepair}) {
     const [itemValue, setItemValue] = useState(0)
     const [applyStyle, setApplyStyle] = useState(false)
 
-    useEffect( () => {
+    useEffect(() => {
         if (applyStyle) {
-            setTimeout( () => {
+            setTimeout(() => {
                 setApplyStyle(false)
             }, 1000)
         }
     }, [applyStyle])
 
 
-    //TODO: переписати на функцію яка буде відправляти в бек енд Мішки
-    // async function SendMessageToBot(number, price) {
-    //     const response = await SendMessageBot.sendMessage(number, price)
-    //     return response.data.status
-    // }
+    async function SendMessageToBot(number, price) {
+        const response = await SendMessageBot.sendMessage(number, price)
+        return response.data.status
+    }
 
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        
-        // з todo 
-        // const response = SendMessageToBot(repair.number, itemValue)
+
+        const response = SendMessageToBot(repair.number, itemValue)
 
         // дописати умову
         setApplyStyle(true)
         applyRepair(repair.id, repair.status)
 
 
-        setTimeout( () => {
+        setTimeout(() => {
             setVisible(false)
         }, 2000)
     }
 
     return (
         <div className={rootClasses.join(' ')} onClick={() => setVisible(false)}>
-            
+
             <div className="CloseRepair__window" onClick={(e) => e.stopPropagation()}>
 
 
@@ -63,9 +61,9 @@ const CloseRepair = function ({visible, setVisible, repair, applyRepair}) {
                     <form onSubmit={handleSubmit}>
                         <input
                             ref={inputRef}
-                            className={applyStyle ? 'CloseRepair__input-green' : 'CloseRepair__formblock-input'} 
+                            className={applyStyle ? 'CloseRepair__input-green' : 'CloseRepair__formblock-input'}
                             value={itemValue}
-                            onChange={ (e) => setItemValue(e.target.value)}
+                            onChange={(e) => setItemValue(e.target.value)}
                         />
                         <button
                             type="submit"

@@ -625,7 +625,7 @@ body {
   font-weight: 500;
 }
 .repairs-sidebar__link {
-  display: block;
+  cursor: pointer;
   transition: all 0.3s ease 0s;
 }
 .repairs-sidebar__link:hover {
