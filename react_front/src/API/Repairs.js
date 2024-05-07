@@ -1,12 +1,13 @@
 import axios from "axios";
 
 export default class Repairs {
-    static async getRepairs(sidebarResult, activeMasters, activeShops) {
+    static async getRepairs(sidebarResult, activeMasters, activeShops, isCheked) {
         const response = await axios.get('service/api/v2/get_rep/', {
             params: {
               'sidebar': sidebarResult,
               'masters': activeMasters.join(','),
               'shops': activeShops.join(','),
+              'checked': isCheked,
             }
         })
         return response
