@@ -168,7 +168,7 @@ class CloseRepairItemFromBot(APIView):
 
 class CountRepairs(APIView):
     def get(self, request):
-        all_repairs = Repair.objects.all()
+        # Тут закінчити провірку\ Тоді всі ремонти в залежності від
         masters = CustomUser.objects.filter(groups__name='Майстри')
         masters = [int(master.id) for master in masters]
 
@@ -177,10 +177,22 @@ class CountRepairs(APIView):
         except MultiValueDictKeyError:
             master = None
 
+        try:
+            cheked = request.GET['checked']
+        except MultiValueDictKeyError:
+            cheked = False
+
+        if cheked == 'false':
+            closed_repairs = Repair.objects.filter(status='closed')
+            all_repairs = Repair.objects.exclude(status='closed')
+        else:
+            all_repairs = Repair.objects.all()
+            closed_repairs = Repair.objects.filter(status='closed')
+
         if master:
             json_out = {
                 'all': str(len(all_repairs.filter(master=master))),
-                'closed': len(all_repairs.filter(status='closed').filter(master=master)),
+                'closed': len(closed_repairs.filter(master=master)),
                 'warranty': len(all_repairs.filter(warranty=True).exclude(status='closed').filter(master=master)),
                 'new': len(all_repairs.filter(status='new')),
                 'inprogress': len(
@@ -189,7 +201,7 @@ class CountRepairs(APIView):
         else:
             json_out = {
                 'all': str(len(all_repairs)),
-                'closed': len(all_repairs.filter(status='closed')),
+                'closed': len(closed_repairs),
                 'warranty': len(all_repairs.filter(warranty=True).exclude(status='closed')),
                 'new': len(all_repairs.filter(status='new')),
                 'inprogress': len(all_repairs.filter(master__in=masters).exclude(status='closed')),

@@ -8,7 +8,7 @@ const Sidebar = function ({ activeMasters, activeShops, setActiveMasters, setAct
 
     const [repairsCount, setRepairsCount] = useState({})
     async function getRepairsCount() {
-        const response = await Repairs.getCountRepairs(userLast.userId, activeMasters)
+        const response = await Repairs.getCountRepairs(userLast.userId, activeMasters, isCheked)
         setRepairsCount({
             'all': response.data.all,
             'closed': response.data.closed,

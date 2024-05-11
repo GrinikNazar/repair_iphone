@@ -25,16 +25,16 @@ const CloseRepair = function ({ visible, setVisible, repair, applyRepair }) {
     }, [applyStyle])
 
 
-    async function SendMessageToBot(number, price) {
-        const response = await SendMessageBot.sendMessage(number, price)
-        return response.data.status
-    }
+    // async function SendMessageToBot(number, price) {
+    //     const response = await SendMessageBot.sendMessage(number, price)
+    //     return response.data.status
+    // }
 
 
     const handleSubmit = (event) => {
         event.preventDefault()
 
-        const response = SendMessageToBot(repair.number, itemValue)
+        // const response = SendMessageToBot(repair.number, itemValue)
 
         // дописати умову
         setApplyStyle(true)
